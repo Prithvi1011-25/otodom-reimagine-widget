@@ -27,7 +27,7 @@ export function GalleryPhoto({
           onOpen(media);
         }}
       >
-        {isHero ? 'Zaaranżuj tę przestrzeń →' : 'Zaaranżuj →'}
+        {isHero ? 'Reimagine this space →' : 'Reimagine →'}
       </button>
     </div>
   );

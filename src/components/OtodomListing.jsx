@@ -55,7 +55,7 @@ export function OtodomListing({ listing, onOpenGallery, widget }) {
           <div>
             <p className="otodom-listing__offer">
               <span className="otodom-listing__dot" />
-              {listing.offerType} · Ogłoszenie {listing.id}
+              {listing.offerType} · Listing {listing.id}
             </p>
 
             <h1>
@@ -72,7 +72,7 @@ export function OtodomListing({ listing, onOpenGallery, widget }) {
           </div>
 
           <div className="otodom-listing__price-block">
-            <p className="otodom-listing__price">{listing.price} zł</p>
+            <p className="otodom-listing__price">{listing.price} PLN</p>
             <p className="otodom-listing__price-meta">{listing.pricePerSqm}</p>
             {listing.priceDrop ? (
               <p className="otodom-listing__price-drop">{listing.priceDrop}</p>
@@ -85,7 +85,7 @@ export function OtodomListing({ listing, onOpenGallery, widget }) {
         <div className="lg__toolbar">
           <button type="button" className="lg__pill" onClick={onOpenGallery}>
             <CameraIcon />
-            Zdjęcia ({listing.media.length})
+            Photos ({listing.media.length})
           </button>
         </div>
 
@@ -113,11 +113,11 @@ export function OtodomListing({ listing, onOpenGallery, widget }) {
                     type="button"
                     className="lg__thumb lg__thumb--all"
                     onClick={onOpenGallery}
-                    aria-label={`Wszystkie zdjęcia (${listing.media.length})`}
+                    aria-label={`All photos (${listing.media.length})`}
                   >
                     <img src={item.image_url} alt={item.label} />
                     <span className="lg__all-label">
-                      Wszystkie zdjęcia ({listing.media.length})
+                      All photos ({listing.media.length})
                     </span>
                   </button>
                 );
@@ -141,8 +141,8 @@ export function OtodomListing({ listing, onOpenGallery, widget }) {
 
       {!hasImages ? (
         <p className="otodom-listing__images-note">
-          Zdjęcia ogłoszenia zostaną dodane wkrótce. Po ich dodaniu przycisk
-          „Zaaranżuj tę przestrzeń” uruchomi widget ReimagineHome.
+          Listing photos will be added soon. Once they are available, the
+          “Reimagine this space” button will open the ReimagineHome widget.
         </p>
       ) : null}
 
@@ -150,33 +150,33 @@ export function OtodomListing({ listing, onOpenGallery, widget }) {
         <div className="otodom-listing__main">
           <section className="otodom-panel">
             <div className="otodom-panel__header">
-              <h2>Szczegóły nieruchomości</h2>
+              <h2>Property details</h2>
               <button type="button" className="otodom-link-btn">
-                Pobierz broszurę ↓
+                Download brochure ↓
               </button>
             </div>
 
             <dl className="otodom-details-grid">
-              <DetailItem label="Powierzchnia" value={listing.details.area} />
-              <DetailItem label="Liczba pokoi" value={listing.details.rooms} />
-              <DetailItem label="Piętro" value={listing.details.floor} />
-              <DetailItem label="Rok budowy" value={listing.details.year} />
-              <DetailItem label="Ogrzewanie" value={listing.details.heating} />
-              <DetailItem label="Stan wykończenia" value={listing.details.condition} />
-              <DetailItem label="Rynek" value={listing.details.market} />
-              <DetailItem label="Forma własności" value={listing.details.ownership} />
+              <DetailItem label="Area" value={listing.details.area} />
+              <DetailItem label="Rooms" value={listing.details.rooms} />
+              <DetailItem label="Floor" value={listing.details.floor} />
+              <DetailItem label="Year built" value={listing.details.year} />
+              <DetailItem label="Heating" value={listing.details.heating} />
+              <DetailItem label="Condition" value={listing.details.condition} />
+              <DetailItem label="Market" value={listing.details.market} />
+              <DetailItem label="Ownership" value={listing.details.ownership} />
             </dl>
           </section>
 
           <section className="otodom-panel">
-            <h2>Opis</h2>
+            <h2>Description</h2>
             {listing.description.split('\n\n').map((paragraph) => (
               <p key={paragraph.slice(0, 24)}>{paragraph}</p>
             ))}
 
             {listing.bullets?.length ? (
               <>
-                <h3>Układ mieszkania</h3>
+                <h3>Layout</h3>
                 <ul>
                   {listing.bullets.map((bullet) => (
                     <li key={bullet}>{bullet}</li>
@@ -186,7 +186,7 @@ export function OtodomListing({ listing, onOpenGallery, widget }) {
             ) : null}
 
             <button type="button" className="otodom-link-btn">
-              Pokaż więcej ↓
+              Show more ↓
             </button>
           </section>
         </div>
@@ -195,7 +195,7 @@ export function OtodomListing({ listing, onOpenGallery, widget }) {
           <div className="otodom-sidebar__price-card">
             <p className="otodom-sidebar__price">{listing.price}</p>
             <p className="otodom-sidebar__price-meta">
-              {listing.pricePerSqm} · Czynsz {listing.rent}
+              {listing.pricePerSqm} · Service charge {listing.rent}
               {listing.priceDrop ? ` · ${listing.priceDrop}` : ''}
             </p>
           </div>
@@ -209,33 +209,33 @@ export function OtodomListing({ listing, onOpenGallery, widget }) {
           </div>
 
           <button type="button" className="otodom-btn otodom-btn--primary">
-            Wyślij wiadomość
+            Send message
           </button>
           <button type="button" className="otodom-btn otodom-btn--secondary">
-            Pokaż numer telefonu
+            Show phone number
           </button>
 
           <div className="otodom-mortgage">
-            <h3>Szacunkowa rata kredytu</h3>
+            <h3>Estimated mortgage payment</h3>
             <p className="otodom-mortgage__note">
-              We współpracy z BetterBond · Szacunkowo, niewiążące
+              In partnership with BetterBond · Estimate only, non-binding
             </p>
             <div className="otodom-mortgage__row">
-              <span>Cena nieruchomości</span>
-              <strong>{listing.price} zł</strong>
+              <span>Property price</span>
+              <strong>{listing.price} PLN</strong>
             </div>
             <div className="otodom-mortgage__row">
-              <span>Wkład własny 20%</span>
+              <span>Down payment 20%</span>
               <strong>
                 {Math.round(
-                  Number(listing.price.replace(/\s/g, '')) * 0.2,
-                ).toLocaleString('pl-PL')}{' '}
-                zł
+                  Number(listing.price.replace(/[\s,]/g, '')) * 0.2,
+                ).toLocaleString('en-US')}{' '}
+                PLN
               </strong>
             </div>
             <div className="otodom-mortgage__result">
-              <span>Rata miesięczna</span>
-              <strong>8 940 zł / mies.</strong>
+              <span>Monthly payment</span>
+              <strong>8,940 PLN / mo.</strong>
             </div>
           </div>
         </aside>

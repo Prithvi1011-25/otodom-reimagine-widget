@@ -32,7 +32,7 @@ export function ListingPage() {
 
       <main className="listing-page">
         <p className="listing-page__back">
-          <Link to="/">← Wszystkie ogłoszenia</Link>
+          <Link to="/">← All listings</Link>
         </p>
 
         <OtodomListing
@@ -43,12 +43,12 @@ export function ListingPage() {
       </main>
 
       <footer className="otodom-footer">
-        <p>© 2026 Otodom · Spółka Grupy OLX</p>
+        <p>© 2026 otodom · OLX Group</p>
         <div className="otodom-footer__links">
-          <a href="#">Regulamin</a>
-          <a href="#">Prywatność</a>
-          <a href="#">Pliki cookie</a>
-          <a href="#">Pomoc</a>
+          <a href="#">Terms</a>
+          <a href="#">Privacy</a>
+          <a href="#">Cookies</a>
+          <a href="#">Help</a>
         </div>
       </footer>
 

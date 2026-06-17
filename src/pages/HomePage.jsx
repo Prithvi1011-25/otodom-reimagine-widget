@@ -10,12 +10,11 @@ export function HomePage() {
 
       <main className="home-page">
         <section className="home-page__intro">
-          <p className="home-page__badge">ReimagineHome × Otodom</p>
-          <h1>Ogłoszenia na sprzedaż</h1>
+          <p className="home-page__badge">ReimagineHome × otodom</p>
+          <h1>Apartments for sale</h1>
           <p>
-            Przeglądaj przykładowe ogłoszenia Otodom z zintegrowanym widgetem
-            ReimagineHome. Wybierz mieszkanie, aby zobaczyć pełny widok
-            ogłoszenia.
+            Browse sample otodom listings with the integrated ReimagineHome widget.
+            Select an apartment to open the full listing view.
           </p>
         </section>
 
@@ -26,17 +25,17 @@ export function HomePage() {
         </section>
 
         <p className="home-page__back-link">
-          <Link to="/">Odśwież listę ogłoszeń</Link>
+          <Link to="/">Refresh listings</Link>
         </p>
       </main>
 
       <footer className="otodom-footer">
-        <p>© 2026 Otodom · Spółka Grupy OLX</p>
+        <p>© 2026 otodom · OLX Group</p>
         <div className="otodom-footer__links">
-          <a href="#">Regulamin</a>
-          <a href="#">Prywatność</a>
-          <a href="#">Pliki cookie</a>
-          <a href="#">Pomoc</a>
+          <a href="#">Terms</a>
+          <a href="#">Privacy</a>
+          <a href="#">Cookies</a>
+          <a href="#">Help</a>
         </div>
       </footer>
     </div>

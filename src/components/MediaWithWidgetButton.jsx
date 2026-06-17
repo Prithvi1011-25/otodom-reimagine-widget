@@ -27,8 +27,8 @@ export function MediaWithWidgetButton({
         disabled={widgetDisabled || !hasImage}
         title={
           hasImage
-            ? 'Zaaranżuj tę przestrzeń'
-            : 'Dodaj zdjęcia ogłoszenia, aby uruchomić widget'
+            ? 'Reimagine this space'
+            : 'Add listing photos to launch the widget'
         }
         onClick={(event) => {
           event.stopPropagation();
@@ -36,9 +36,9 @@ export function MediaWithWidgetButton({
         }}
       >
         {isThumb ? (
-          <>Zaaranżuj →</>
+          <>Reimagine →</>
         ) : (
-          <>Zaaranżuj tę przestrzeń →</>
+          <>Reimagine this space →</>
         )}
       </button>
     </div>

@@ -59,8 +59,8 @@ export function buildWidgetBranding() {
     text_primary: '#071121FF',
     text_secondary: '#1B232E',
     primary_color: '#00b388',
-    heading: 'Zaaranżuj tę przestrzeń',
-    sub_heading: 'Obsługiwane przez ReimagineHome AI',
+    heading: 'Reimagine this space',
+    sub_heading: 'Powered by ReimagineHome AI',
     footer_text: '',
   };
 }

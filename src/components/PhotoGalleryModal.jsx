@@ -88,8 +88,8 @@ function getTileSize(index) {
 }
 
 function buildDefaultMessage(listing) {
-  const type = listing?.offerType?.includes('wynajem') ? 'wynajmu' : 'sprzedaży';
-  return `To ogłoszenie o ${type} mieszkania przyciągnęło moją uwagę. Proszę o więcej szczegółów. Z niecierpliwością oczekuję na wiadomość.`;
+  const type = listing?.offerType?.toLowerCase().includes('rent') ? 'rent' : 'sale';
+  return `I'm interested in this apartment listing for ${type}. Please share more details. I look forward to your reply.`;
 }
 
 export function PhotoGalleryModal({ media, listing, isOpen, onClose, widget }) {
@@ -145,14 +145,14 @@ export function PhotoGalleryModal({ media, listing, isOpen, onClose, widget }) {
   return createPortal(
     <div className="pgm" role="presentation">
       <header className="pgm__toolbar">
-        <button type="button" className="pgm__back" aria-label="Wróć" onClick={onClose}>
+        <button type="button" className="pgm__back" aria-label="Back" onClick={onClose}>
           <BackIcon />
         </button>
 
         <div className="pgm__tabs">
           <button type="button" className="pgm__tab pgm__tab--active">
             <CameraIcon />
-            Zdjęcia ({media.length})
+            Photos ({media.length})
           </button>
           {hasImages ? (
             <button
@@ -161,20 +161,20 @@ export function PhotoGalleryModal({ media, listing, isOpen, onClose, widget }) {
               onClick={handleOpenAll}
             >
               <ReimagineIcon />
-              Zaaranżuj tę przestrzeń
+              Reimagine this space
             </button>
           ) : null}
           <button type="button" className="pgm__tab" disabled>
             <FloorPlanIcon />
-            Rzut
+            Floor plan
           </button>
         </div>
 
         <div className="pgm__actions">
-          <button type="button" className="pgm__icon-btn" aria-label="Udostępnij">
+          <button type="button" className="pgm__icon-btn" aria-label="Share">
             <ShareIcon />
           </button>
-          <button type="button" className="pgm__icon-btn" aria-label="Dodaj do ulubionych">
+          <button type="button" className="pgm__icon-btn" aria-label="Add to favorites">
             <HeartIcon />
           </button>
         </div>
@@ -192,7 +192,7 @@ export function PhotoGalleryModal({ media, listing, isOpen, onClose, widget }) {
                   type="button"
                   className="pgm__tile-btn"
                   onClick={() => setLightboxIndex(index)}
-                  aria-label={`Otwórz zdjęcie ${index + 1}`}
+                  aria-label={`Open photo ${index + 1}`}
                 >
                   <img src={item.image_url} alt={item.label} loading="lazy" />
                 </button>
@@ -206,7 +206,7 @@ export function PhotoGalleryModal({ media, listing, isOpen, onClose, widget }) {
                       handleOpenSingle(item);
                     }}
                   >
-                    Zaaranżuj tę przestrzeń →
+                    Reimagine this space →
                   </button>
                 ) : null}
               </div>
@@ -217,14 +217,14 @@ export function PhotoGalleryModal({ media, listing, isOpen, onClose, widget }) {
         <aside className="pgm__sidebar">
           <form className="pgm__form" onSubmit={(e) => e.preventDefault()}>
             <label className="pgm__field">
-              <span className="pgm__label">E-mail*</span>
+              <span className="pgm__label">Email*</span>
               <input type="email" defaultValue="prithvi@styldod.com" />
             </label>
 
             <label className="pgm__field">
-              <span className="pgm__label">Numer telefonu*</span>
+              <span className="pgm__label">Phone number*</span>
               <div className="pgm__phone">
-                <select defaultValue="+48" aria-label="Kod kraju">
+                <select defaultValue="+48" aria-label="Country code">
                   <option value="+48">+48</option>
                 </select>
                 <input type="tel" placeholder="" />
@@ -232,7 +232,7 @@ export function PhotoGalleryModal({ media, listing, isOpen, onClose, widget }) {
             </label>
 
             <label className="pgm__field">
-              <span className="pgm__label">Twoja wiadomość*</span>
+              <span className="pgm__label">Your message*</span>
               <textarea
                 rows={5}
                 defaultValue={buildDefaultMessage(listing)}
@@ -240,24 +240,24 @@ export function PhotoGalleryModal({ media, listing, isOpen, onClose, widget }) {
             </label>
 
             <p className="pgm__legal">
-              Administratorem Twoich danych osobowych jest Grupa OLX Sp. z o.o. Więcej
-              informacji o przetwarzaniu danych osobowych znajdziesz w naszej Polityce
-              prywatności.
+              The controller of your personal data is Grupa OLX Sp. z o.o. You can
+              find more information about personal data processing in our Privacy
+              Policy.
             </p>
 
             <button type="submit" className="pgm__submit">
-              Wyślij wiadomość
+              Send message
             </button>
           </form>
         </aside>
       </div>
 
       {active ? (
-        <div className="photo-lightbox" role="dialog" aria-modal="true" aria-label="Podgląd zdjęcia">
+        <div className="photo-lightbox" role="dialog" aria-modal="true" aria-label="Photo preview">
           <button
             type="button"
             className="photo-lightbox__backdrop"
-            aria-label="Wróć do galerii"
+            aria-label="Back to gallery"
             onClick={() => setLightboxIndex(null)}
           />
 
@@ -265,7 +265,7 @@ export function PhotoGalleryModal({ media, listing, isOpen, onClose, widget }) {
             <button
               type="button"
               className="photo-lightbox__close"
-              aria-label="Wróć do galerii"
+              aria-label="Back to gallery"
               onClick={() => setLightboxIndex(null)}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -281,7 +281,7 @@ export function PhotoGalleryModal({ media, listing, isOpen, onClose, widget }) {
             <button
               type="button"
               className="photo-lightbox__nav photo-lightbox__nav--prev"
-              aria-label="Poprzednie zdjęcie"
+              aria-label="Previous photo"
               onClick={() =>
                 setLightboxIndex((index) => (index - 1 + media.length) % media.length)
               }
@@ -299,7 +299,7 @@ export function PhotoGalleryModal({ media, listing, isOpen, onClose, widget }) {
             <button
               type="button"
               className="photo-lightbox__nav photo-lightbox__nav--next"
-              aria-label="Następne zdjęcie"
+              aria-label="Next photo"
               onClick={() =>
                 setLightboxIndex((index) => (index + 1) % media.length)
               }

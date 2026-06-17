@@ -14,7 +14,7 @@ export function ImagePlaceholder({ label, className = '' }) {
         </svg>
       </div>
       <span className="image-placeholder__label">{label}</span>
-      <span className="image-placeholder__hint">Zdjęcie wkrótce</span>
+      <span className="image-placeholder__hint">Photo coming soon</span>
     </div>
   );
 }

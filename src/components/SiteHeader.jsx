@@ -1,18 +1,18 @@
 export function SiteHeader() {
   const navItems = [
-    { label: 'Kupuję', active: true },
-    { label: 'Wynajmuję', active: false },
-    { label: 'Sprzedaję', active: false },
-    { label: 'Rynek pierwotny', active: false },
-    { label: 'Dla firm', active: false },
+    { label: 'Buy', active: true },
+    { label: 'Rent', active: false },
+    { label: 'Sell', active: false },
+    { label: 'Primary market', active: false },
+    { label: 'For business', active: false },
   ];
 
   return (
     <header className="otodom-header">
       <div className="otodom-header__inner">
         <div className="otodom-header__left">
-          <a href="/" className="otodom-logo">
-            <span className="otodom-logo__odo">odo</span>
+          <a href="/" className="otodom-logo" aria-label="otodom" translate="no">
+            <span className="otodom-logo__oto">oto</span>
             <span className="otodom-logo__dom">dom</span>
           </a>
 
@@ -31,10 +31,10 @@ export function SiteHeader() {
 
         <div className="otodom-header__right">
           <a href="#" className="otodom-header__account">
-            Moje konto
+            My account
           </a>
           <button type="button" className="otodom-header__cta">
-            + Dodaj ogłoszenie
+            + Add listing
           </button>
         </div>
       </div>

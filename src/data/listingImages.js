@@ -15,7 +15,7 @@ export function buildMedia(slug) {
 
       return {
         id: `photo-${number}`,
-        label: `Zdjęcie ${number}`,
+        label: `Photo ${number}`,
         image_url: url,
       };
     });
