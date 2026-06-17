@@ -1,0 +1,63 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --otodom-green: #00b388;
+  --otodom-green-dark: #009973;
+  --otodom-text: #1a1a1a;
+  --otodom-muted: #6b7280;
+  --otodom-border: #e5e7eb;
+  --otodom-bg: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family:
+    'Helvetica Neue',
+    Helvetica,
+    Arial,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--otodom-text);
+  background: var(--otodom-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Widget overlay must sit above the photo gallery modal (z-index 9000). */
+#reih-widget-frame.reih-frame-wrap--open {
+  z-index: 2147483700 !important;
+}
+
+#reih-host-loader {
+  z-index: 2147483699 !important;
+}
