@@ -56,22 +56,32 @@ export function buildWidgetLanguage() {
 export function buildWidgetBranding() {
   return {
     logo: 'https://ecdn.styldod.com/assets/logo/6a2bca9bce2a355c2c13d058.svg',
-    text_primary: '#071121FF',
-    text_secondary: '#1B232E',
-    primary_color: '#00b388',
-    heading: 'Reimagine this space',
-    sub_heading: 'Powered by ReimagineHome AI',
-    footer_text: '',
+    colors: {
+      primary: '#071121FF',
+      textPrimary: '#071121FF',
+      textSecondary: '#1B232E',
+    },
+    typography: {
+      fontFamily: "'Caveat', cursive",
+      fontUrl:
+        'https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap',
+    },
+    heading: 'Reimagine Your Space',
+    subHeading: 'AI-powered room redesign',
+    footerText: '',
   };
 }
 
+function stripAlphaHex(color) {
+  return color.replace(/ff$/i, '');
+}
+
 export function getWidgetHostCssVars() {
-  const branding = buildWidgetBranding();
+  const { colors } = buildWidgetBranding();
   return {
-    '--otodom-green': branding.primary_color,
-    '--reih-primary': branding.primary_color,
-    '--reih-text-primary': branding.text_primary.replace(/ff$/i, ''),
-    '--reih-text-secondary': branding.text_secondary,
+    '--reih-primary': stripAlphaHex(colors.primary),
+    '--reih-text-primary': stripAlphaHex(colors.textPrimary),
+    '--reih-text-secondary': colors.textSecondary,
   };
 }
 
