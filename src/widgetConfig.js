@@ -61,11 +61,6 @@ export function buildWidgetBranding() {
       textPrimary: '#071121FF',
       textSecondary: '#1B232E',
     },
-    typography: {
-      fontFamily: "'Caveat', cursive",
-      fontUrl:
-        'https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap',
-    },
     heading: 'Reimagine Your Space',
     subHeading: 'AI-powered room redesign',
     footerText: '',
