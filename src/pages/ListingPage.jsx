@@ -14,10 +14,8 @@ export function ListingPage() {
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const widget = useReihWidget(listing?.media ?? [], listing?.slug ?? '', {
-    onActionClick: (section) => {
-      if (section === 'body') {
-        setContactOpen(true);
-      }
+    onActionClick: () => {
+      setContactOpen(true);
     },
   });
 
