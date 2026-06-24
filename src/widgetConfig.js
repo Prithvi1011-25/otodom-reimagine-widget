@@ -58,25 +58,35 @@ export function buildWidgetBranding() {
     logo: 'https://ecdn.styldod.com/assets/logo/6a2bca9bce2a355c2c13d058.svg',
     colors: {
       primary: '#071121FF',
-      textPrimary: '#071121FF',
-      textSecondary: '#1B232E',
+      secondary: '#1B232E',
+      text_primary: '#071121FF',
+      text_secondary: '#1B232E',
     },
-    heading: 'Reimagine Your Space',
-    subHeading: 'AI-powered room redesign',
-    footerText: '',
   };
 }
 
-function stripAlphaHex(color) {
-  return color.replace(/ff$/i, '');
+export function buildWidgetBody() {
+  return {
+    text: 'Like these arrangements?',
+    subtext:
+      'Contact the advertiser to see this property in person or ask about the details.',
+    actions_label: 'Contact the advertiser',
+  };
 }
 
-export function getWidgetHostCssVars() {
-  const { colors } = buildWidgetBranding();
+export function buildWidgetHeader() {
   return {
-    '--reih-primary': stripAlphaHex(colors.primary),
-    '--reih-text-primary': stripAlphaHex(colors.textPrimary),
-    '--reih-text-secondary': colors.textSecondary,
+    text: 'Visualize Your Space',
+    subtext: 'See how this property could look with different styles',
+    actions_label: 'Schedule a Viewing',
+  };
+}
+
+export function buildWidgetFooter() {
+  return {
+    text: 'Powered by ReimagineHome',
+    subtext: 'AI-powered interior design at your fingertips',
+    actions_label: 'Learn More',
   };
 }
 
@@ -90,7 +100,36 @@ const widgetCallbacks = {
   onClose: () => {
     console.log('[reih] onClose: widget closed');
   },
+  onActionClick: (event) => {
+    console.log('[reih] onActionClick fired:', event);
+  },
 };
+
+function buildWidgetOptions() {
+  return {
+    mode: 'simple',
+    branding: buildWidgetBranding(),
+    body: buildWidgetBody(),
+    header: buildWidgetHeader(),
+    footer: buildWidgetFooter(),
+    sidebar_position: 'right',
+    language: buildWidgetLanguage(),
+    ...widgetCallbacks,
+  };
+}
+
+function stripAlphaHex(color) {
+  return color.replace(/ff$/i, '');
+}
+
+export function getWidgetHostCssVars() {
+  const { colors } = buildWidgetBranding();
+  return {
+    '--reih-primary': stripAlphaHex(colors.primary),
+    '--reih-text-primary': stripAlphaHex(colors.text_primary),
+    '--reih-text-secondary': colors.text_secondary,
+  };
+}
 
 export async function openReihWithMedia(widget, media) {
   clearReihLoader();
@@ -101,10 +140,7 @@ export async function openReihWithMedia(widget, media) {
 
   await widget.open({
     media,
-    mode: 'simple',
-    branding: buildWidgetBranding(),
-    sidebar_position: 'right',
-    language: buildWidgetLanguage(),
+    ...buildWidgetOptions(),
   });
 }
 
@@ -152,11 +188,7 @@ export function waitForReihWidget(timeoutMs = 30_000) {
 export async function buildScriptEmbedWidgetConfig(media, slug) {
   return {
     media: await resolveWidgetMedia(media, slug),
-    mode: 'simple',
-    branding: buildWidgetBranding(),
-    sidebar_position: 'right',
-    language: buildWidgetLanguage(),
-    ...widgetCallbacks,
+    ...buildWidgetOptions(),
   };
 }
 
@@ -171,10 +203,6 @@ export async function buildNpmWidgetConfigureOptions(media, slug) {
   return {
     public_key: WIDGET_PUBLIC_KEY,
     media: await resolveWidgetMedia(media, slug),
-    mode: 'simple',
-    branding: buildWidgetBranding(),
-    sidebar_position: 'right',
-    language: buildWidgetLanguage(),
-    ...widgetCallbacks,
+    ...buildWidgetOptions(),
   };
 }
