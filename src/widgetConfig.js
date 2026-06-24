@@ -74,22 +74,6 @@ export function buildWidgetBody() {
   };
 }
 
-export function buildWidgetHeader() {
-  return {
-    text: 'Visualize Your Space',
-    subtext: 'See how this property could look with different styles',
-    actions_label: 'Schedule a Viewing',
-  };
-}
-
-export function buildWidgetFooter() {
-  return {
-    text: 'Powered by ReimagineHome',
-    subtext: 'AI-powered interior design at your fingertips',
-    actions_label: 'Learn More',
-  };
-}
-
 const widgetCallbacks = {
   onComplete: (detail) => {
     console.log('[reih] onComplete:', detail);
@@ -110,8 +94,6 @@ function buildWidgetOptions() {
     mode: 'simple',
     branding: buildWidgetBranding(),
     body: buildWidgetBody(),
-    header: buildWidgetHeader(),
-    footer: buildWidgetFooter(),
     sidebar_position: 'right',
     language: buildWidgetLanguage(),
     ...widgetCallbacks,

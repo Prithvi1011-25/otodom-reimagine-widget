@@ -31,6 +31,10 @@ export function reihDevTunnel() {
         proc.stdout?.on('data', captureOrigin);
         proc.stderr?.on('data', captureOrigin);
 
+        proc.on('exit', () => {
+          publicOrigin = '';
+        });
+
         server.httpServer?.on('close', () => {
           publicOrigin = '';
           proc.kill();
