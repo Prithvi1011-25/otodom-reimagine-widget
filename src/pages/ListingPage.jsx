@@ -1,5 +1,6 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
+import { ContactAdvertiserModal } from '../components/ContactAdvertiserModal.jsx';
 import { OtodomListing } from '../components/OtodomListing.jsx';
 import { PhotoGalleryModal } from '../components/PhotoGalleryModal.jsx';
 import { SiteHeader } from '../components/SiteHeader.jsx';
@@ -11,7 +12,14 @@ export function ListingPage() {
   const { slug } = useParams();
   const listing = getListingBySlug(slug);
   const [galleryOpen, setGalleryOpen] = useState(false);
-  const widget = useReihWidget(listing?.media ?? [], listing?.slug ?? '');
+  const [contactOpen, setContactOpen] = useState(false);
+  const widget = useReihWidget(listing?.media ?? [], listing?.slug ?? '', {
+    onActionClick: (section) => {
+      if (section === 'body') {
+        setContactOpen(true);
+      }
+    },
+  });
 
   if (!listing) {
     return <Navigate to="/" replace />;
@@ -38,6 +46,7 @@ export function ListingPage() {
         <OtodomListing
           listing={listing}
           onOpenGallery={openGallery}
+          onContactAdvertiser={() => setContactOpen(true)}
           widget={widget}
         />
       </main>
@@ -57,7 +66,14 @@ export function ListingPage() {
         listing={listing}
         isOpen={galleryOpen}
         onClose={closeGallery}
+        onContactAdvertiser={() => setContactOpen(true)}
         widget={widget}
+      />
+
+      <ContactAdvertiserModal
+        listing={listing}
+        isOpen={contactOpen}
+        onClose={() => setContactOpen(false)}
       />
     </div>
   );

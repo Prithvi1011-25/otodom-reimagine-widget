@@ -40,7 +40,7 @@ function CameraIcon() {
   );
 }
 
-export function OtodomListing({ listing, onOpenGallery, widget }) {
+export function OtodomListing({ listing, onOpenGallery, onContactAdvertiser, widget }) {
   const { openAll, openSingle, hasImages } = widget;
 
   const hero = listing.media[0];
@@ -208,7 +208,11 @@ export function OtodomListing({ listing, onOpenGallery, widget }) {
             </div>
           </div>
 
-          <button type="button" className="otodom-btn otodom-btn--primary">
+          <button
+            type="button"
+            className="otodom-btn otodom-btn--primary"
+            onClick={onContactAdvertiser}
+          >
             Send message
           </button>
           <button type="button" className="otodom-btn otodom-btn--secondary">

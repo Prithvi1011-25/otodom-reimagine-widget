@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { buildContactMessage } from '../lib/contactMessage.js';
 import '../photo-gallery-modal.css';
 
 function BackIcon() {
@@ -88,11 +89,17 @@ function getTileSize(index) {
 }
 
 function buildDefaultMessage(listing) {
-  const type = listing?.offerType?.toLowerCase().includes('rent') ? 'rent' : 'sale';
-  return `I'm interested in this apartment listing for ${type}. Please share more details. I look forward to your reply.`;
+  return buildContactMessage(listing);
 }
 
-export function PhotoGalleryModal({ media, listing, isOpen, onClose, widget }) {
+export function PhotoGalleryModal({
+  media,
+  listing,
+  isOpen,
+  onClose,
+  onContactAdvertiser,
+  widget,
+}) {
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const { openAll, openSingle, hasImages } = widget;
 
@@ -245,7 +252,7 @@ export function PhotoGalleryModal({ media, listing, isOpen, onClose, widget }) {
               Policy.
             </p>
 
-            <button type="submit" className="pgm__submit">
+            <button type="submit" className="pgm__submit" onClick={onContactAdvertiser}>
               Send message
             </button>
           </form>

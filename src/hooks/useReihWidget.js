@@ -6,16 +6,41 @@ import {
   clearReihLoader,
   openReihWithMedia,
   resolveWidgetMedia,
+  setWidgetCallbackOverrides,
 } from '../widgetConfig.js';
 import { hasWidgetMedia } from '../widgetMedia.js';
+
+/** Matches widget iframe slide-out duration (reimaginehome-widget SLIDE_MS). */
+const WIDGET_CLOSE_MS = 300;
 
 /**
  * npm package integration — mirrors /Users/work/Downloads/React PackageIntegrationPage.
  */
-export function useReihWidget(media, slug) {
+export function useReihWidget(media, slug, { onActionClick } = {}) {
   const openingRef = useRef(false);
   const mediaRef = useRef(media);
   const slugRef = useRef(slug);
+  const onActionClickRef = useRef(onActionClick);
+
+  useEffect(() => {
+    onActionClickRef.current = onActionClick;
+  }, [onActionClick]);
+
+  useEffect(() => {
+    setWidgetCallbackOverrides({
+      onActionClick: (section) => {
+        reihWidget.close();
+        clearReihLoader();
+        window.setTimeout(() => {
+          onActionClickRef.current?.(section);
+        }, WIDGET_CLOSE_MS);
+      },
+    });
+
+    return () => {
+      setWidgetCallbackOverrides({});
+    };
+  }, []);
 
   useEffect(() => {
     mediaRef.current = media;

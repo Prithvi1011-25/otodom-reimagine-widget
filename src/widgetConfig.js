@@ -74,6 +74,8 @@ export function buildWidgetBody() {
   };
 }
 
+let widgetCallbackOverrides = {};
+
 const widgetCallbacks = {
   onComplete: (detail) => {
     console.log('[reih] onComplete:', detail);
@@ -84,10 +86,17 @@ const widgetCallbacks = {
   onClose: () => {
     console.log('[reih] onClose: widget closed');
   },
-  onActionClick: (event) => {
-    console.log('[reih] onActionClick fired:', event);
+  onActionClick: (section) => {
+    widgetCallbackOverrides.onActionClick?.(section);
+    if (!widgetCallbackOverrides.onActionClick) {
+      console.log('[reih] onActionClick fired:', section);
+    }
   },
 };
+
+export function setWidgetCallbackOverrides(overrides = {}) {
+  widgetCallbackOverrides = overrides;
+}
 
 function buildWidgetOptions() {
   return {

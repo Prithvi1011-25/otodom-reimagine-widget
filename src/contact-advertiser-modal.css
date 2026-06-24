@@ -1,0 +1,167 @@
+.contact-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483800;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.contact-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: rgba(17, 24, 39, 0.45);
+  cursor: pointer;
+}
+
+.contact-modal__panel {
+  position: relative;
+  width: min(100%, 420px);
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.18);
+}
+
+.contact-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.contact-modal__close:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.contact-modal__agent {
+  display: flex;
+  gap: 0.875rem;
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.contact-modal__avatar {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #e5e7eb;
+  color: #374151;
+  font-weight: 700;
+}
+
+.contact-modal__agent-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.contact-modal__agent-meta {
+  margin: 0.2rem 0 0;
+  font-size: 0.8125rem;
+  color: #6b7280;
+}
+
+.contact-modal__phone-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111827;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.contact-modal__form {
+  padding: 1.25rem;
+}
+
+.contact-modal__field {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.contact-modal__label {
+  display: block;
+  margin-bottom: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.contact-modal__field input,
+.contact-modal__field textarea,
+.contact-modal__phone select {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: #111827;
+  background: #fff;
+}
+
+.contact-modal__field input:disabled {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.contact-modal__field textarea {
+  resize: vertical;
+  min-height: 7rem;
+}
+
+.contact-modal__phone {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 0.5rem;
+}
+
+.contact-modal__legal {
+  margin: 0 0 1rem;
+  font-size: 0.6875rem;
+  line-height: 1.45;
+  color: #6b7280;
+}
+
+.contact-modal__legal a {
+  color: inherit;
+}
+
+.contact-modal__submit {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #fff;
+  background: #1a2233;
+  cursor: pointer;
+}
+
+.contact-modal__submit:hover {
+  background: #0f172a;
+}
