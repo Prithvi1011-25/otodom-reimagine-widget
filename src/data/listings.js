@@ -268,6 +268,61 @@ The layout includes a comfortable living room with kitchenette, a separate bedro
     },
     media: buildMedia('mokotow-panorama-apt'),
   },
+  {
+    id: '68064330',
+    slug: 'ochota-comfort-apt',
+    breadcrumbs: [
+      'Apartment for sale',
+      'Secondary market',
+      '3 rooms',
+      'Warsaw',
+      'Ochota',
+      'Rakowiec',
+    ],
+    offerType: 'Private listing',
+    title: 'Comfortable 3-room apartment in a green neighbourhood',
+    titleHighlight: '72.10 m²',
+    subtitle: 'Loggia. Garage space.',
+    address: 'ul. Grójecka, Ochota, Warszawa',
+    price: '980,000',
+    pricePerSqm: '13,592 PLN / m²',
+    priceDrop: null,
+    rent: '680 PLN',
+    availableFrom: 'no information',
+    details: {
+      area: '72.10 m²',
+      rooms: '3',
+      floor: '3/9',
+      year: '2015',
+      heating: 'district',
+      condition: 'ready to live',
+      market: 'secondary',
+      ownership: 'full ownership',
+    },
+    description: `A comfortable three-room apartment in the Rakowiec area of Ochota, close to parks and daily amenities. The layout offers a spacious living room, separate kitchen, two bedrooms, and a practical loggia.
+
+The estate includes underground parking, a playground, and good transport links to the city centre via Grójecka and nearby tram lines.`,
+    bullets: [
+      'Living room with access to loggia',
+      'Separate kitchen with dining space',
+      'Two bedrooms with wardrobe space',
+      'Bathroom with bathtub and shower',
+      'Underground garage parking space',
+      'Quiet courtyard-facing location',
+    ],
+    agent: {
+      initials: 'EB',
+      name: 'Ewa Borkowska',
+      company: 'Metrohouse S.A.',
+      meta: 'Private listing · Member since 2019',
+    },
+    agency: {
+      brand: 'metrohouse',
+      name: 'Metrohouse S.A.',
+      color: '#ffd100',
+    },
+    media: buildMedia('ochota-comfort-apt'),
+  },
 ];
 
 export function getListingBySlug(slug) {
