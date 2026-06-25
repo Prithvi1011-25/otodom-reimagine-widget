@@ -1,3 +1,3 @@
 export function buildContactMessage() {
-  return 'Good morning. I would like to view this property. Is it possible to arrange a meeting? Best regards.';
+  return 'This apartment for sale seems interesting to me. I would like to know more details. Please get in touch.';
 }

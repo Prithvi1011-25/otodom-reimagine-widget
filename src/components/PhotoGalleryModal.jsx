@@ -168,7 +168,7 @@ export function PhotoGalleryModal({
               onClick={handleOpenAll}
             >
               <ReimagineIcon />
-              Reimagine this space
+              Arrange interior
             </button>
           ) : null}
           <button type="button" className="pgm__tab" disabled>
@@ -213,7 +213,7 @@ export function PhotoGalleryModal({
                       handleOpenSingle(item);
                     }}
                   >
-                    Reimagine this space →
+                    Arrange interior →
                   </button>
                 ) : null}
               </div>

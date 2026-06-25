@@ -1,4 +1,4 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { ContactAdvertiserModal } from '../components/ContactAdvertiserModal.jsx';
 import { OtodomListing } from '../components/OtodomListing.jsx';
@@ -37,10 +37,6 @@ export function ListingPage() {
       <SiteHeader />
 
       <main className="listing-page">
-        <p className="listing-page__back">
-          <Link to="/">← All listings</Link>
-        </p>
-
         <OtodomListing
           listing={listing}
           onOpenGallery={openGallery}
