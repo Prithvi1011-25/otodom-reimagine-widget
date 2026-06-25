@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ImagePlaceholder } from './ImagePlaceholder.jsx';
 
-export function ListingCard({ listing }) {
+export function ListingCard({ listing, listingBasePath = '/listing' }) {
   const hero = listing.media[0];
 
   return (
-    <Link to={`/listing/${listing.slug}`} className="listing-card">
+    <Link to={`${listingBasePath}/${listing.slug}`} className="listing-card">
       <div className="listing-card__media">
         {hero?.image_url ? (
           <img src={hero.image_url} alt={listing.title} />

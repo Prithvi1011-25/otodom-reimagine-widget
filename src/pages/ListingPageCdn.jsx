@@ -4,23 +4,23 @@ import { ContactAdvertiserModal } from '../components/ContactAdvertiserModal.jsx
 import { OtodomListing } from '../components/OtodomListing.jsx';
 import { PhotoGalleryModal } from '../components/PhotoGalleryModal.jsx';
 import { SiteHeader } from '../components/SiteHeader.jsx';
-import { useReihWidget } from '../hooks/useReihWidget.js';
+import { useReihScriptEmbed } from '../hooks/useReihScriptEmbed.js';
 import { clearReihLoader } from '../widgetConfig.js';
 import { getListingBySlug } from '../data/listings.js';
 
-export function ListingPage() {
+export function ListingPageCdn() {
   const { slug } = useParams();
   const listing = getListingBySlug(slug);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
-  const widget = useReihWidget(listing?.media ?? [], listing?.slug ?? '', {
+  const widget = useReihScriptEmbed(listing?.media ?? [], listing?.slug ?? '', {
     onActionClick: () => {
       setContactOpen(true);
     },
   });
 
   if (!listing) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/?integration=cdn" replace />;
   }
 
   const openGallery = () => {
@@ -38,7 +38,7 @@ export function ListingPage() {
 
       <main className="listing-page">
         <p className="listing-page__integration-note">
-          <Link to="/">← All listings (npm)</Link>
+          <Link to="/?integration=cdn">← All listings (CDN embed)</Link>
         </p>
 
         <OtodomListing

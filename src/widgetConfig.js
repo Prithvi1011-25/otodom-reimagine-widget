@@ -10,7 +10,9 @@ export {
 } from './widgetEnv.js';
 
 export const WIDGET_SCRIPT_URL =
-  'https://reimaginehome-embed-widget-app-git-dev-styldod.vercel.app/widget.js';
+  'https://cdn.jsdelivr.net/npm/reimaginehome-widget/dist/widget.js';
+
+export const WIDGET_SCRIPT_ID = 'reih-widget-script';
 
 export const WIDGET_PUBLIC_KEY = 'public_key';
 
@@ -185,11 +187,16 @@ export function waitForReihWidget(timeoutMs = 30_000) {
   });
 }
 
-export async function buildScriptEmbedWidgetConfig(media, slug) {
+export async function buildScriptEmbedWidgetConfig(media, slug, selectedMedia = media) {
   return {
-    media: await resolveWidgetMedia(media, slug),
+    media: await resolveWidgetMedia(media, slug, selectedMedia),
     ...buildWidgetOptions(),
   };
+}
+
+/** CDN embed: set window.reihWidgetConfig before open (public_key lives on data-public-key). */
+export async function setScriptEmbedConfig(media, slug, selectedMedia = media) {
+  window.reihWidgetConfig = await buildScriptEmbedWidgetConfig(media, slug, selectedMedia);
 }
 
 export async function buildWidgetConfig(media, slug) {
