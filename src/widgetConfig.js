@@ -44,35 +44,35 @@ export async function resolveWidgetMedia(allMedia, slug, selectedMedia = allMedi
 
 export { hasWidgetMedia };
 
-export function buildWidgetLanguage() {
-  return [
-    { code: 'en-US', name: 'English (United States)', nativeName: 'English (US)' },
-    { code: 'en-GB', name: 'English (United Kingdom)', nativeName: 'English (UK)' },
-    { code: 'pl-PL', name: 'Polish', nativeName: 'Polski' },
-    { code: 'es-ES', name: 'Spanish', nativeName: 'Español' },
-  ];
-}
+// export function buildWidgetLanguage() {
+//   return [
+//     { code: 'en-US', name: 'English (United States)', nativeName: 'English (US)' },
+//     { code: 'en-GB', name: 'English (United Kingdom)', nativeName: 'English (UK)' },
+//     { code: 'pl-PL', name: 'Polish', nativeName: 'Polski' },
+//     { code: 'es-ES', name: 'Spanish', nativeName: 'Español' },
+//   ];
+// }
 
-export function buildWidgetBranding() {
-  return {
-    logo: 'https://ecdn.styldod.com/assets/logo/6a2bca9bce2a355c2c13d058.svg',
-    colors: {
-      primary: '#071121FF',
-      secondary: '#1B232E',
-      text_primary: '#071121FF',
-      text_secondary: '#1B232E',
-    },
-  };
-}
+// export function buildWidgetBranding() {
+//   return {
+//     logo: 'https://ecdn.styldod.com/assets/logo/6a2bca9bce2a355c2c13d058.svg',
+//     colors: {
+//       primary: '#071121FF',
+//       secondary: '#1B232E',
+//       text_primary: '#071121FF',
+//       text_secondary: '#1B232E',
+//     },
+//   };
+// }
 
-export function buildWidgetBody() {
-  return {
-    text: 'Like these arrangements?',
-    subtext:
-      'Contact the advertiser to see this property in person or ask about the details.',
-    actions_label: 'Contact the advertiser',
-  };
-}
+// export function buildWidgetBody() {
+//   return {
+//     text: 'Like these arrangements?',
+//     subtext:
+//       'Contact the advertiser to see this property in person or ask about the details.',
+//     actions_label: 'Contact the advertiser',
+//   };
+// }
 
 // export function buildWidgetHeader() {
 //   return {
@@ -117,27 +117,18 @@ export function setWidgetCallbackOverrides(overrides = {}) {
 function buildWidgetOptions() {
   return {
     mode: 'simple',
-    branding: buildWidgetBranding(),
-    body: buildWidgetBody(),
+    // branding: buildWidgetBranding(),
+    // body: buildWidgetBody(),
     // header: buildWidgetHeader(),
     // footer: buildWidgetFooter(),
     sidebar_position: 'right',
-    language: buildWidgetLanguage(),
+    // language: buildWidgetLanguage(),
     ...widgetCallbacks,
   };
 }
 
-function stripAlphaHex(color) {
-  return color.replace(/ff$/i, '');
-}
-
 export function getWidgetHostCssVars() {
-  const { colors } = buildWidgetBranding();
-  return {
-    '--reih-primary': stripAlphaHex(colors.primary),
-    '--reih-text-primary': stripAlphaHex(colors.text_primary),
-    '--reih-text-secondary': colors.text_secondary,
-  };
+  return {};
 }
 
 export async function openReihWithMedia(widget, media) {
