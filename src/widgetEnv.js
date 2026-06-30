@@ -1,5 +1,5 @@
 export const WIDGET_DEV_APP_URL =
-  'https://reimaginehome-embed-widget-app-git-dev-styldod.vercel.app';
+  'https://widget.styldod.com';
 
 export const WIDGET_DEV_API_BASE_URL =
   'https://oetb78o6i5.execute-api.us-west-2.amazonaws.com/dev';
