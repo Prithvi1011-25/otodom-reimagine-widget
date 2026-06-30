@@ -22,19 +22,17 @@
 }
 
 .otodom-logo {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 12px;
   text-decoration: none;
-  font-size: 1.625rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  white-space: nowrap;
+  line-height: 0;
 }
 
-.otodom-logo__oto {
-  color: var(--otodom-green);
-}
-
-.otodom-logo__dom {
-  color: #111827;
+.otodom-logo img {
+  display: block;
+  height: 28px;
+  width: auto;
 }
 
 .otodom-nav {
@@ -87,6 +85,7 @@
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .otodom-header__cta:hover {
@@ -183,36 +182,9 @@
   line-height: 1.65;
 }
 
-.home-page__integration {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0.25rem;
-  border-radius: 999px;
-  background: #f3f4f6;
-  border: 1px solid var(--otodom-border);
-}
-
-.home-page__integration-btn {
-  appearance: none;
-  border: none;
-  border-radius: 999px;
-  padding: 0.5rem 1rem;
+.home-page__back-link {
+  margin: 2rem 0 0;
   font-size: 0.875rem;
-  font-weight: 600;
-  color: #374151;
-  background: transparent;
-  cursor: pointer;
-}
-
-.home-page__integration-btn:hover {
-  color: #111827;
-}
-
-.home-page__integration-btn--active {
-  background: #fff;
-  color: #111827;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
 }
 
 .home-page__grid {
@@ -221,29 +193,24 @@
   gap: 1.25rem;
 }
 
-.home-page__back-link {
-  margin: 2rem 0 0;
-  font-size: 0.875rem;
-}
-
 .listing-page__back {
   display: none;
 }
 
-.listing-page__integration-note {
+.listing-page__back-link {
   max-width: 1280px;
   margin: 0 auto;
   padding: 1rem 1.25rem 0;
   font-size: 0.875rem;
 }
 
-.listing-page__integration-note a {
+.listing-page__back-link a {
   color: #374151;
   text-decoration: none;
   font-weight: 600;
 }
 
-.listing-page__integration-note a:hover {
+.listing-page__back-link a:hover {
   color: var(--otodom-green-dark);
   text-decoration: underline;
 }
@@ -949,10 +916,6 @@
 @media (min-width: 768px) {
   .otodom-nav {
     display: flex;
-  }
-
-  .otodom-header__account {
-    display: inline-flex;
   }
 
   .otodom-listing__body {

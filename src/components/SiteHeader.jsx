@@ -1,53 +1,54 @@
+import { OtodomLogo } from './OtodomLogo.jsx';
+
 function ChevronDown() {
   return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
     </svg>
   );
 }
 
 function UserIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.8" />
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="2.5" />
       <path
         d="M5 20c1.5-3.5 4.5-5 7-5s5.5 1.5 7 5"
         stroke="currentColor"
-        strokeWidth="1.8"
+        strokeWidth="2.5"
         strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
 }
 
+const NAV_DROPDOWN = ['Buy', 'Rent', 'Sell', 'Primary market', 'Companies'];
+
 export function SiteHeader() {
-  const navItems = ['Buy', 'Rent', 'Sell', 'Primary market', 'Companies', 'Mortgages'];
-
   return (
-    <header className="otodom-header">
-      <div className="otodom-header__inner">
-        <div className="otodom-header__left">
-          <a href="/" className="otodom-logo" aria-label="otodom" translate="no">
-            <span className="otodom-logo__oto">oto</span>
-            <span className="otodom-logo__dom">dom</span>
-          </a>
+    <header className="otodom-header otodom-header--listing">
+      <div className="otodom-header__inner ad-page-frame">
+        <OtodomLogo className="otodom-logo otodom-logo--listing" />
 
-          <nav className="otodom-nav" aria-label="Main">
-            {navItems.map((label) => (
-              <a key={label} href="#" className="otodom-nav__link">
-                {label}
-                <ChevronDown />
-              </a>
-            ))}
-          </nav>
-        </div>
+        <nav className="otodom-nav otodom-nav--listing" aria-label="Main">
+          {NAV_DROPDOWN.map((label) => (
+            <a key={label} href="#" className="otodom-nav__link">
+              {label}
+              <ChevronDown />
+            </a>
+          ))}
+          <a href="#" className="otodom-nav__link otodom-nav__link--plain">
+            Mortgages
+          </a>
+        </nav>
 
         <div className="otodom-header__right">
           <a href="#" className="otodom-header__account">
             <UserIcon />
             My account
           </a>
-          <button type="button" className="otodom-header__cta">
+          <button type="button" className="otodom-header__cta otodom-header__cta--outline">
             Post an ad
           </button>
         </div>

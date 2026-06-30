@@ -3,11 +3,11 @@ import { AgencyBar } from './AgencyBar.jsx';
 import { GalleryPhoto } from './GalleryPhoto.jsx';
 import { ListingContactSidebar } from './ListingContactSidebar.jsx';
 import { getWidgetHostCssVars } from '../widgetConfig.js';
-import '../listing-gallery.css';
+import '../listing-page.css';
 
 function DetailRow({ label, value }) {
   return (
-    <div className="listing-details-table__row">
+    <div className="ad-details-table__row">
       <dt>{label}</dt>
       <dd>{value}</dd>
     </div>
@@ -33,7 +33,7 @@ function BackIcon() {
       <path
         d="M15 18l-6-6 6-6"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -44,10 +44,15 @@ function BackIcon() {
 function ShareIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="18" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.8" />
-      <circle cx="6" cy="12" r="2.5" stroke="currentColor" strokeWidth="1.8" />
-      <circle cx="18" cy="19" r="2.5" stroke="currentColor" strokeWidth="1.8" />
-      <path d="M8.2 10.7l7.6-4.4M8.2 13.3l7.6 4.4" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="18" cy="5" r="2.75" stroke="currentColor" strokeWidth="2.5" />
+      <circle cx="6" cy="12" r="2.75" stroke="currentColor" strokeWidth="2.5" />
+      <circle cx="18" cy="19" r="2.75" stroke="currentColor" strokeWidth="2.5" />
+      <path
+        d="M8.5 10.5l7-4M8.5 13.5l7 4"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -58,7 +63,8 @@ function HeartIcon() {
       <path
         d="M12 20.5l-1.1-1C5.4 14.8 2 11.9 2 8.5 2 6 4 4 6.5 4c1.5 0 3 .8 3.8 2.1C11.1 4.8 12.6 4 14.1 4 16.6 4 18.6 6 18.6 8.5c0 3.4-3.4 6.3-8.9 10.9L12 20.5z"
         stroke="currentColor"
-        strokeWidth="1.8"
+        strokeWidth="2.5"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -66,9 +72,13 @@ function HeartIcon() {
 
 function SparkleIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
       <path
-        d="M12 3l1.2 3.6L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2L12 3zM5 19l1 3 1-3 3-1-3-1-1-3-1 3-3 1 3 1zM19 14l.5 1.5L21 16l-1.5.5L19 18l-.5-1.5L17 16l1.5-.5L19 14z"
+        d="M12.1167 7.88345L10.45 3.36678H9.55833L7.89167 7.88345L3.375 9.55011V10.4418L7.89167 12.1084L9.55833 16.6251H10.45L12.1167 12.1084L16.6333 10.4418V9.55011L12.1167 7.88345Z"
+        fill="currentColor"
+      />
+      <path
+        d="M16.2083 3.80008L15.4167 1.66675L14.625 3.80008L12.5 4.58341L14.625 5.37508L15.4167 7.50008L16.2083 5.37508L18.3333 4.58341L16.2083 3.80008Z"
         fill="currentColor"
       />
     </svg>
@@ -78,8 +88,8 @@ function SparkleIcon() {
 function FloorPlanIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect x="4" y="4" width="16" height="16" rx="1" stroke="currentColor" strokeWidth="1.8" />
-      <path d="M4 12h16M12 4v16" stroke="currentColor" strokeWidth="1.8" />
+      <rect x="5" y="5" width="14" height="14" rx="1" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M5 14h8V5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
     </svg>
   );
 }
@@ -87,8 +97,8 @@ function FloorPlanIcon() {
 function VideoIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect x="3" y="6" width="13" height="12" rx="2" stroke="currentColor" strokeWidth="1.8" />
-      <path d="M16 10l5-3v10l-5-3v-4z" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M10.2 9.2v5.6l5.2-2.8-5.2-2.8z" fill="currentColor" />
     </svg>
   );
 }
@@ -97,11 +107,12 @@ function WalkIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
       <path
-        d="M12 4l2 4 4 1-3 3 1 4-4-2-4 2-4-1 4 3 3-4-1-2-4z"
+        d="M12 5l6.5 3.75v7.5L12 20l-6.5-3.75v-7.5L12 5z"
         stroke="currentColor"
         strokeWidth="1.8"
         strokeLinejoin="round"
       />
+      <path d="M12 5v15M5.5 8.75L12 12.5l6.5-3.75" stroke="currentColor" strokeWidth="1.8" />
     </svg>
   );
 }
@@ -121,7 +132,7 @@ function formatPricePerSqm(pricePerSqm) {
 }
 
 function formatRent(rent) {
-  if (!rent) return 'no information';
+  if (!rent || rent === 'no information') return 'no information';
   if (rent.toLowerCase().includes('/month')) return rent;
   return `${rent}/month`;
 }
@@ -149,34 +160,38 @@ export function OtodomListing({ listing, onOpenGallery, onContactAdvertiser, wid
   const agency = listing.agency ?? {
     brand: 'metrohouse',
     name: 'Metrohouse S.A.',
-    color: '#ffd100',
+    logo: '/agency/metrohouse-logo.png',
   };
 
+  const detailHeading = listing.breadcrumbs?.[0] ?? 'Mieszkanie na sprzedaż';
+
   return (
-    <div className="otodom-listing" style={getWidgetHostCssVars()}>
+    <div className="ad-listing" style={getWidgetHostCssVars()}>
       <AgencyBar agency={agency} />
 
-      <section className="lg">
-        <div className="lg__frame">
-          <div className="lg__top-controls">
-            <Link to="/" className="lg__control-btn">
-              <BackIcon />
-              Back
-            </Link>
-            <div className="lg__top-actions">
-              <button type="button" className="lg__control-btn">
-                <ShareIcon />
-                Share
-              </button>
-              <button type="button" className="lg__control-btn">
-                <HeartIcon />
-                Save
-              </button>
-            </div>
+      <div className="ad-toolbar">
+        <div className="ad-page-frame ad-toolbar__inner">
+          <Link to="/" className="ad-toolbar__btn">
+            <BackIcon />
+            Back
+          </Link>
+          <div className="ad-toolbar__actions">
+            <button type="button" className="ad-toolbar__btn">
+              <ShareIcon />
+              Share
+            </button>
+            <button type="button" className="ad-toolbar__btn">
+              <HeartIcon />
+              Save
+            </button>
           </div>
+        </div>
+      </div>
 
-          <div className="lg__mosaic">
-            <div className="lg__hero">
+      <section className="ad-gallery">
+        <div className="ad-page-frame">
+          <div className="ad-gallery__mosaic">
+            <div className="ad-gallery__hero">
               {hero ? (
                 <GalleryPhoto
                   media={hero}
@@ -187,145 +202,126 @@ export function OtodomListing({ listing, onOpenGallery, onContactAdvertiser, wid
                 />
               ) : null}
 
-              <div className="lg__action-bar">
+              <div className="ad-gallery__action-bar">
                 <button
                   type="button"
-                  className="lg__action lg__action--primary"
+                  className="ad-gallery__action ad-gallery__action--primary"
                   disabled={!hasImages}
                   onClick={() => openAll()}
                 >
                   <SparkleIcon />
-                  Arrange interior
+                  Design interior
                 </button>
-                <button type="button" className="lg__action" disabled>
+                <button type="button" className="ad-gallery__action" disabled>
                   <FloorPlanIcon />
                   Floor plan
                 </button>
-                <button type="button" className="lg__action" disabled>
+                <button type="button" className="ad-gallery__action" disabled>
                   <VideoIcon />
                   Video
                 </button>
-                <button type="button" className="lg__action" disabled>
+                <button type="button" className="ad-gallery__action" disabled>
                   <WalkIcon />
                   3d walk
                 </button>
               </div>
             </div>
 
-            <div className="lg__thumbs">
-              {thumbs.map((item, index) => {
-                const isLast = index === thumbs.length - 1;
+            {thumbs.map((item, index) => {
+              const isLast = index === thumbs.length - 1;
 
-                if (isLast) {
-                  return (
+              if (isLast) {
+                return (
+                  <div key={item.id} className="ad-gallery__thumb ad-gallery__thumb--all">
+                    <img src={item.image_url} alt={item.label} />
                     <button
-                      key={item.id}
                       type="button"
-                      className="lg__thumb lg__thumb--all"
+                      className="ad-gallery__all-photos-btn"
                       onClick={onOpenGallery}
                       aria-label={`All photos (${listing.media.length})`}
                     >
-                      <img src={item.image_url} alt={item.label} />
-                      <span className="lg__all-label">
+                      <span className="ad-gallery__thumb-overlay" aria-hidden />
+                      <span className="ad-gallery__all-photos">
                         All photos ({listing.media.length})
                       </span>
                     </button>
-                  );
-                }
-
-                return (
-                  <div key={item.id} className="lg__thumb">
-                    <GalleryPhoto
-                      media={item}
-                      label={item.label}
-                      variant="thumb"
-                      disabled={!hasImages}
-                      onOpen={() => openSingle(item)}
-                    />
                   </div>
                 );
-              })}
-            </div>
+              }
+
+              return (
+                <div key={item.id} className="ad-gallery__thumb">
+                  <GalleryPhoto
+                    media={item}
+                    label={item.label}
+                    variant="thumb"
+                    disabled={!hasImages}
+                    onOpen={() => openSingle(item)}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {!hasImages ? (
-        <p className="otodom-listing__images-note otodom-listing__content">
-          Listing photos will be added soon. Once they are available, Arrange interior will
-          open the ReimagineHome widget.
-        </p>
-      ) : null}
+      <div className="ad-page-frame ad-listing__columns">
+        <div className="ad-listing__main">
+          <section className="ad-summary">
+            <h1 className="ad-summary__title">{listing.title}</h1>
+            <div className="ad-summary__price-row">
+              <p className="ad-summary__price">{formatPrice(listing.price)}</p>
+              <p className="ad-summary__price-meta">{formatPricePerSqm(listing.pricePerSqm)}</p>
+            </div>
+            <p className="ad-summary__location">
+              <LocationIcon />
+              {listing.address}
+            </p>
 
-      <div className="otodom-listing__content">
-        <div className="otodom-listing__body">
-          <div className="otodom-listing__main">
-            <section className="listing-hero-info">
-              <h1 className="listing-hero-info__title">{listing.title}</h1>
-              <div className="listing-hero-info__price-row">
-                <p className="listing-hero-info__price">{formatPrice(listing.price)}</p>
-                <p className="listing-hero-info__price-meta">
-                  {formatPricePerSqm(listing.pricePerSqm)}
-                </p>
-              </div>
-              <p className="listing-hero-info__location">
-                <LocationIcon />
-                {listing.address}
-              </p>
+            <hr className="ad-summary__divider" />
 
-              <div className="listing-ad">
-                <span className="listing-ad__label">Reklama</span>
-                <a href="#" className="listing-ad__link">
-                  <span className="listing-ad__logo" aria-hidden>
-                    ING
-                  </span>
-                  Finansowanie z ING
-                </a>
-              </div>
+            <span className="ad-summary__ad-label">Ad</span>
+            <a href="#" className="ad-summary__ad-link">
+              <img className="ad-summary__ad-logo" src="/ing-logo.png" alt="ING" />
+              Finansowanie z ING
+            </a>
+          </section>
 
-              <hr className="listing-divider" />
-            </section>
-
-            <section className="listing-details-section">
-              <h2 className="listing-details-section__heading">
-                {listing.breadcrumbs?.[0] ?? 'Apartment for sale'}
-              </h2>
-              <dl className="listing-details-table">
-                {getDetailRows(listing).map((row) => (
-                  <DetailRow key={row.label} label={row.label} value={row.value} />
-                ))}
-              </dl>
-            </section>
-
-            <section className="otodom-panel otodom-panel--description">
-              <h2>Description</h2>
-              {listing.description.split('\n\n').map((paragraph) => (
-                <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+          <section className="ad-details-card">
+            <h2 className="ad-details-card__heading">{detailHeading}</h2>
+            <dl className="ad-details-table">
+              {getDetailRows(listing).map((row) => (
+                <DetailRow key={row.label} label={row.label} value={row.value} />
               ))}
+            </dl>
 
-              {listing.bullets?.length ? (
-                <>
+            <h2 className="ad-details-card__description-title">Description</h2>
+            {listing.description.split('\n\n').map((paragraph) => (
+              <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+            ))}
+
+            {listing.bullets?.length ? (
+              <>
                   <h3>Layout</h3>
-                  <ul>
-                    {listing.bullets.map((bullet) => (
-                      <li key={bullet}>{bullet}</li>
-                    ))}
-                  </ul>
-                </>
-              ) : null}
+                <ul>
+                  {listing.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
 
-              <button type="button" className="otodom-link-btn">
-                Show more ↓
-              </button>
-            </section>
-          </div>
-
-          <ListingContactSidebar
-            listing={listing}
-            agency={agency}
-            onContactAdvertiser={onContactAdvertiser}
-          />
+            <button type="button" className="ad-details-card__more">
+              Show more ↓
+            </button>
+          </section>
         </div>
+
+        <ListingContactSidebar
+          listing={listing}
+          agency={agency}
+          onContactAdvertiser={onContactAdvertiser}
+        />
       </div>
     </div>
   );

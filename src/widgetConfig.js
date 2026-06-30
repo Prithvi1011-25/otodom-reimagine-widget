@@ -9,12 +9,11 @@ export {
   WIDGET_LOCAL_API_BASE_URL,
 } from './widgetEnv.js';
 
-export const WIDGET_SCRIPT_URL =
-  'https://cdn.jsdelivr.net/npm/reimaginehome-widget/dist/widget.js';
+export const WIDGET_SCRIPT_URL = 'https://widget.styldod.com/widget.js';
 
 export const WIDGET_SCRIPT_ID = 'reih-widget-script';
 
-export const WIDGET_PUBLIC_KEY = 'public_key';
+export const WIDGET_PUBLIC_KEY = 'ppk_0wh4jZLGM2UL1P761KCsU2ls';
 
 export const REIH_LOADER_ID = 'reih-host-loader';
 
@@ -55,17 +54,11 @@ export { hasWidgetMedia };
 //   ];
 // }
 
-// export function buildWidgetBranding() {
-//   return {
-//     logo: 'https://ecdn.styldod.com/assets/logo/6a2bca9bce2a355c2c13d058.svg',
-//     colors: {
-//       primary: '#071121FF',
-//       secondary: '#1B232E',
-//       text_primary: '#071121FF',
-//       text_secondary: '#1B232E',
-//     },
-//   };
-// }
+export function buildWidgetBranding() {
+  return {
+    logo: 'https://ecdn.styldod.com/assets/logo/6a2bca9bce2a355c2c13d058.svg',
+  };
+}
 
 // export function buildWidgetBody() {
 //   return {
@@ -118,14 +111,17 @@ export function setWidgetCallbackOverrides(overrides = {}) {
 
 function buildWidgetOptions() {
   return {
-    mode: 'simple',
-    // branding: buildWidgetBranding(),
+    // mode: 'simple',
+    // user_id: 'demo-user-123',
+    // session_id: 'demo-client-session-123',
+    // listing_id: 'demo-listing-123',
+    branding: buildWidgetBranding(),
     // body: buildWidgetBody(),
     // header: buildWidgetHeader(),
     // footer: buildWidgetFooter(),
-    sidebar_position: 'right',
+    // sidebar_position: 'right',
     // language: buildWidgetLanguage(),
-    ...widgetCallbacks,
+    // ...widgetCallbacks,
   };
 }
 
@@ -203,13 +199,5 @@ export async function buildWidgetConfig(media, slug) {
   return {
     public_key: WIDGET_PUBLIC_KEY,
     ...(await buildScriptEmbedWidgetConfig(media, slug)),
-  };
-}
-
-export async function buildNpmWidgetConfigureOptions(media, slug) {
-  return {
-    public_key: WIDGET_PUBLIC_KEY,
-    media: await resolveWidgetMedia(media, slug),
-    ...buildWidgetOptions(),
   };
 }

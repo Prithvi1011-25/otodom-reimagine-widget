@@ -1,10 +1,10 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
 import { ContactAdvertiserModal } from '../components/ContactAdvertiserModal.jsx';
+import { SiteHeader } from '../components/SiteHeader.jsx';
 import { OtodomListing } from '../components/OtodomListing.jsx';
 import { PhotoGalleryModal } from '../components/PhotoGalleryModal.jsx';
-import { SiteHeader } from '../components/SiteHeader.jsx';
-import { useReihWidget } from '../hooks/useReihWidget.js';
+import { useReihScriptEmbed } from '../hooks/useReihScriptEmbed.js';
 import { clearReihLoader } from '../widgetConfig.js';
 import { getListingBySlug } from '../data/listings.js';
 
@@ -13,7 +13,7 @@ export function ListingPage() {
   const listing = getListingBySlug(slug);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
-  const widget = useReihWidget(listing?.media ?? [], listing?.slug ?? '', {
+  const widget = useReihScriptEmbed(listing?.media ?? [], listing?.slug ?? '', {
     onActionClick: () => {
       setContactOpen(true);
     },
@@ -33,14 +33,10 @@ export function ListingPage() {
   };
 
   return (
-    <div className="app-shell">
+    <div className="app-shell app-shell--listing">
       <SiteHeader />
 
       <main className="listing-page">
-        <p className="listing-page__integration-note">
-          <Link to="/">← All listings (npm)</Link>
-        </p>
-
         <OtodomListing
           listing={listing}
           onOpenGallery={openGallery}
@@ -48,16 +44,6 @@ export function ListingPage() {
           widget={widget}
         />
       </main>
-
-      <footer className="otodom-footer">
-        <p>© 2026 otodom · OLX Group</p>
-        <div className="otodom-footer__links">
-          <a href="#">Terms</a>
-          <a href="#">Privacy</a>
-          <a href="#">Cookies</a>
-          <a href="#">Help</a>
-        </div>
-      </footer>
 
       <PhotoGalleryModal
         media={listing.media}

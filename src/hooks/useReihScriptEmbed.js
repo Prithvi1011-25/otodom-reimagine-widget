@@ -107,7 +107,7 @@ export function useReihScriptEmbed(media, slug, { onActionClick } = {}) {
       await openReihWithMedia(widget, widgetMedia);
     } catch (error) {
       clearReihLoader();
-      console.error('[reih][cdn] Widget open failed:', error);
+      console.error('[reih] Widget open failed:', error);
     } finally {
       openingRef.current = false;
     }

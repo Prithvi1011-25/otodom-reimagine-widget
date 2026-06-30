@@ -36,9 +36,9 @@ function padPhotoNumber(index) {
   return String(index + 1).padStart(2, '0');
 }
 
-export async function buildWidgetImageUrl(slug, photoIndex) {
+export async function buildWidgetImageUrl(slug, photoIndex, publicFile) {
   const origin = await getWidgetImageOrigin();
-  const fileName = `${padPhotoNumber(photoIndex)}.webp`;
+  const fileName = publicFile ?? `${padPhotoNumber(photoIndex)}.webp`;
   return `${origin}/listings/${slug}/${fileName}`;
 }
 
@@ -49,7 +49,7 @@ export async function toWidgetMediaItems(allMedia, slug, selectedMedia = allMedi
     items.map(async (item) => {
       const index = allMedia.findIndex((entry) => entry.id === item.id);
       const photoIndex = index >= 0 ? index : 0;
-      const image_url = await buildWidgetImageUrl(slug, photoIndex);
+      const image_url = await buildWidgetImageUrl(slug, photoIndex, item.publicFile);
       const payload = { image_url };
 
       if (item.label) {

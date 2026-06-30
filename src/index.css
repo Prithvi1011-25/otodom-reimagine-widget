@@ -5,7 +5,7 @@
 }
 
 :root {
-  --otodom-green: #00b388;
+  --otodom-green: #00ad6d;
   --otodom-green-dark: #009973;
   --otodom-text: #1a1a1a;
   --otodom-muted: #6b7280;
@@ -19,7 +19,7 @@
 
 body {
   margin: 0;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: 'Sora', Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: var(--otodom-text);
