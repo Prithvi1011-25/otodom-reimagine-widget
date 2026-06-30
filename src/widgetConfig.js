@@ -121,7 +121,7 @@ function buildWidgetOptions() {
     // footer: buildWidgetFooter(),
     // sidebar_position: 'right',
     // language: buildWidgetLanguage(),
-    // ...widgetCallbacks,
+    ...widgetCallbacks,
   };
 }
 
