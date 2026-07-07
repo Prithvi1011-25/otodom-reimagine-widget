@@ -13,7 +13,7 @@ export const WIDGET_SCRIPT_URL = 'https://widget.styldod.com/widget.js';
 
 export const WIDGET_SCRIPT_ID = 'reih-widget-script';
 
-export const WIDGET_PUBLIC_KEY = 'ppk_0wh4jZLGM2UL1P761KCsU2ls';
+export const WIDGET_PUBLIC_KEY = 'ppk_FdbgOVTinCcmpGCr3SzA7W5d';
 
 export const REIH_LOADER_ID = 'reih-host-loader';
 
