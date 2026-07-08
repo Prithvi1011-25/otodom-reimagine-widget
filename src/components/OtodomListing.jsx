@@ -16,7 +16,7 @@ const GALLERY_ACTIONS = [
   { icon: '/icons/gallery-ai.svg', label: 'Zaaranżuj wnętrze', primary: true },
   { icon: '/icons/gallery-plan.svg', label: 'Rzut' },
   { icon: '/icons/gallery-video.svg', label: 'Wideo' },
-  { icon: '/icons/gallery-cube.svg', label: 'Spacer 3D' },
+  { icon: '/icons/gallery-cube.svg', label: 'Spacer 3D', bold: true },
 ];
 
 const GALLERY_ACTIONS_MOBILE = [
@@ -24,7 +24,7 @@ const GALLERY_ACTIONS_MOBILE = [
   { icon: '/icons/chip-camera.svg', label: 'photos', photos: true },
   { icon: '/icons/gallery-plan.svg', label: 'Plany mieszkań (2)' },
   { icon: '/icons/gallery-video.svg', label: 'Wideo' },
-  { icon: '/icons/gallery-cube.svg', label: 'Spacer 3D' },
+  { icon: '/icons/gallery-cube.svg', label: 'Spacer 3D', bold: true },
 ];
 
 const EXTRA_FEATURES = [
@@ -270,7 +270,9 @@ export function OtodomListing({ listing, onOpenGallery, onContactAdvertiser, wid
                     key={action.label}
                     role="button"
                     tabIndex={0}
-                    className="ad-gallery__action ad-static-cta"
+                    className={`ad-gallery__action ad-static-cta${
+                      action.bold ? ' ad-gallery__action--bold' : ''
+                    }`}
                   >
                     <img src={action.icon} alt="" aria-hidden width="20" height="20" />
                     {action.label}
@@ -369,7 +371,9 @@ export function OtodomListing({ listing, onOpenGallery, onContactAdvertiser, wid
                   key={label}
                   role="button"
                   tabIndex={0}
-                  className="ad-gallery__action ad-gallery__action--chip ad-static-cta"
+                  className={`ad-gallery__action ad-gallery__action--chip ad-static-cta${
+                    action.bold ? ' ad-gallery__action--bold' : ''
+                  }`}
                 >
                   <img src={action.icon} alt="" aria-hidden width="16" height="16" />
                   {label}
