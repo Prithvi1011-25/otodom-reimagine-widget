@@ -1,10 +1,80 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 function ChevronDown() {
   return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
       <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
+  );
+}
+
+function SelectField({ className, label, options, defaultValue }) {
+  const initial = options.find((opt) => opt.value === defaultValue) ?? options[0];
+  const [selected, setSelected] = useState(initial);
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const handlePointer = (event) => {
+      if (rootRef.current && !rootRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    const handleKey = (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+
+    document.addEventListener('mousedown', handlePointer);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('mousedown', handlePointer);
+      document.removeEventListener('keydown', handleKey);
+    };
+  }, [open]);
+
+  return (
+    <div
+      ref={rootRef}
+      className={`home-search__field home-search__field--select home-select${
+        open ? ' home-select--open' : ''
+      }${className ? ` ${className}` : ''}`}
+    >
+      <span className="visually-hidden">{label}</span>
+      <button
+        type="button"
+        className="home-select__trigger"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={label}
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        <span className="home-select__value">{selected.label}</span>
+        <ChevronDown />
+      </button>
+
+      {open && (
+        <ul className="home-select__menu" role="listbox" aria-label={label}>
+          {options.map((opt) => (
+            <li key={opt.value} role="option" aria-selected={opt.value === selected.value}>
+              <button
+                type="button"
+                className={`home-select__option${
+                  opt.value === selected.value ? ' home-select__option--active' : ''
+                }`}
+                onClick={() => {
+                  setSelected(opt);
+                  setOpen(false);
+                }}
+              >
+                {opt.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
 
@@ -32,7 +102,7 @@ export function HomeSearchWidget() {
 
   return (
     <div className="home-search">
-      <div className="home-search__tabs" role="tablist" aria-label="Typ wyszukiwania">
+      <div className="home-search__toggle" role="tablist" aria-label="Typ wyszukiwania">
         <button
           type="button"
           role="tab"
@@ -55,40 +125,46 @@ export function HomeSearchWidget() {
 
       <form className="home-search__form" onSubmit={(event) => event.preventDefault()}>
         <div className="home-search__grid">
-          <label className="home-search__field home-search__field--select home-search__field--type">
-            <span className="visually-hidden">Typ nieruchomości</span>
-            <select defaultValue="mieszkania">
-              <option value="mieszkania">Mieszkania</option>
-              <option value="domy">Domy</option>
-              <option value="dzialki">Działki</option>
-            </select>
-            <ChevronDown />
-          </label>
+          <SelectField
+            className="home-search__field--type"
+            label="Typ nieruchomości"
+            defaultValue="mieszkania"
+            options={[
+              { value: 'mieszkania', label: 'Mieszkania' },
+              { value: 'kawalerki', label: 'Kawalerki' },
+              { value: 'domy', label: 'Domy' },
+              { value: 'inwestycje', label: 'Inwestycje' },
+              { value: 'pokoje', label: 'Pokoje' },
+              { value: 'dzialki', label: 'Działki' },
+            ]}
+          />
 
-          <label className="home-search__field home-search__field--select home-search__field--transaction">
-            <span className="visually-hidden">Rodzaj transakcji</span>
-            <select defaultValue="sale">
-              <option value="sale">Na sprzedaż</option>
-              <option value="rent">Do wynajęcia</option>
-            </select>
-            <ChevronDown />
-          </label>
+          <SelectField
+            className="home-search__field--transaction"
+            label="Rodzaj transakcji"
+            defaultValue="sale"
+            options={[
+              { value: 'sale', label: 'Na sprzedaż' },
+              { value: 'rent', label: 'Do wynajęcia' },
+            ]}
+          />
 
           <label className="home-search__field home-search__field--location">
             <span className="visually-hidden">Lokalizacja</span>
             <input type="text" placeholder="Wpisz lokalizację" />
           </label>
 
-          <label className="home-search__field home-search__field--select home-search__field--radius">
-            <span className="visually-hidden">Promień</span>
-            <select defaultValue="0">
-              <option value="0">+ 0 km</option>
-              <option value="5">+ 5 km</option>
-              <option value="10">+ 10 km</option>
-              <option value="25">+ 25 km</option>
-            </select>
-            <ChevronDown />
-          </label>
+          <SelectField
+            className="home-search__field--radius"
+            label="Promień"
+            defaultValue="0"
+            options={[
+              { value: '0', label: '+ 0 km' },
+              { value: '5', label: '+ 5 km' },
+              { value: '10', label: '+ 10 km' },
+              { value: '25', label: '+ 25 km' },
+            ]}
+          />
 
           <div className="home-search__range-group home-search__range-group--price">
             <span className="home-search__range-label">Cena</span>

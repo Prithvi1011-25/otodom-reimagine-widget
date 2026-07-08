@@ -1,3 +1,4 @@
+import { Footer } from '../components/Footer.jsx';
 import { HomeHeader } from '../components/HomeHeader.jsx';
 import { HomeSearchWidget } from '../components/HomeSearchWidget.jsx';
 import { PromotedAds } from '../components/PromotedAds.jsx';
@@ -26,6 +27,8 @@ export function HomePage() {
 
         <PromotedAds listings={LISTINGS} />
       </main>
+
+      <Footer />
     </div>
   );
 }

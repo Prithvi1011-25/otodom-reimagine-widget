@@ -1,3 +1,3 @@
 export function buildContactMessage() {
-  return 'This apartment for sale seems interesting to me. I would like to know more details. Please get in touch.';
+  return 'To mieszkanie na sprzedaż wydaje mi się interesujące. Chciałbym poznać więcej szczegółów. Proszę o kontakt.';
 }

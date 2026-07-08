@@ -1,34 +1,5 @@
-import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ImagePlaceholder } from './ImagePlaceholder.jsx';
-
-function ChevronLeft() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M15 18l-6-6 6-6"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function ChevronRight() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M9 18l6-6-6-6"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 function formatPlnPrice(price) {
   const value = Number(String(price).replace(/[\s,]/g, ''));
@@ -84,18 +55,7 @@ function PromotedCard({ listing }) {
 }
 
 export function PromotedAds({ listings }) {
-  const trackRef = useRef(null);
   const promoted = listings.slice(0, 8);
-
-  const scroll = (direction) => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const card = track.querySelector('.promoted-card');
-    const gap = 16;
-    const amount = card ? card.getBoundingClientRect().width + gap : 300;
-    track.scrollBy({ left: direction * amount, behavior: 'smooth' });
-  };
 
   return (
     <section className="promoted-ads">
@@ -103,36 +63,21 @@ export function PromotedAds({ listings }) {
         <div className="promoted-ads__header">
           <div className="promoted-ads__title-row">
             <h2>Promowane ogłoszenia</h2>
-            <Link to="/" className="promoted-ads__view-all">
+            <Link to="/" className="promoted-ads__view-all promoted-ads__view-all--inline">
               Zobacz Wszystkie
             </Link>
           </div>
-
-          <div className="promoted-ads__nav">
-            <button
-              type="button"
-              className="promoted-ads__nav-btn"
-              aria-label="Poprzednie ogłoszenia"
-              onClick={() => scroll(-1)}
-            >
-              <ChevronLeft />
-            </button>
-            <button
-              type="button"
-              className="promoted-ads__nav-btn"
-              aria-label="Następne ogłoszenia"
-              onClick={() => scroll(1)}
-            >
-              <ChevronRight />
-            </button>
-          </div>
         </div>
 
-        <div className="promoted-ads__track" ref={trackRef}>
+        <div className="promoted-ads__track">
           {promoted.map((listing) => (
             <PromotedCard key={listing.id} listing={listing} />
           ))}
         </div>
+
+        <Link to="/" className="promoted-ads__view-all promoted-ads__view-all--below">
+          Zobacz Wszystkie
+        </Link>
       </div>
     </section>
   );
