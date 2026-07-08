@@ -1,141 +1,67 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { buildContactMessage } from '../lib/contactMessage.js';
+import { ListingContactSidebar } from './ListingContactSidebar.jsx';
 import '../photo-gallery-modal.css';
 
-function BackIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M15 18l-6-6 6-6"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
+const CHIP_TABS = [
+  { id: 'photos', icon: '/icons/chip-camera.svg', label: 'Zdjęcia', active: true },
+  { id: 'plan', icon: '/icons/chip-plan.svg', label: 'Plan' },
+  { id: 'video', icon: '/icons/chip-video.svg', label: 'Wideo' },
+  { id: 'walk', icon: '/icons/chip-cube.svg', label: 'Spacer 3D' },
+];
 
-function CameraIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M4 8h3l1.5-2h7L17 8h3a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2v-8a2 2 0 012-2z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
-      <circle cx="12" cy="13" r="3.5" stroke="currentColor" strokeWidth="1.8" />
-    </svg>
-  );
-}
+const PROMO_COPY = {
+  title: 'Chcesz zobaczyć, jak to mieszkanie może odzwierciedlić Twój styl?',
+  sub: 'Wypróbuj nasz wirtualny kreator wnętrz, aby w kilka sekund odkryć różne style dla tego wnętrza.',
+  cta: 'Zaaranżuj wnętrze',
+};
 
-function FloorPlanIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect x="4" y="4" width="16" height="16" rx="1" stroke="currentColor" strokeWidth="1.8" />
-      <path d="M4 12h16M12 4v16" stroke="currentColor" strokeWidth="1.8" />
-    </svg>
-  );
-}
+// After the hero + promo we alternate: 50/50 row -> full-width -> 50/50 -> full,
+// so every full-width image is followed by a two-image row.
+// If the last slice can't fill a row, promote it to full-width so we never
+// render a small, orphaned tile.
+const GRID_PATTERN = [
+  { kind: 'row', cols: 2, height: 314 },
+  { kind: 'full', height: 478 },
+];
 
-function ShareIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="18" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.8" />
-      <circle cx="6" cy="12" r="2.5" stroke="currentColor" strokeWidth="1.8" />
-      <circle cx="18" cy="19" r="2.5" stroke="currentColor" strokeWidth="1.8" />
-      <path d="M8.2 10.7l7.6-4.4M8.2 13.3l7.6 4.4" stroke="currentColor" strokeWidth="1.8" />
-    </svg>
-  );
-}
+function buildGridSections(items) {
+  const sections = [];
+  let cursor = 0;
+  let patternIndex = 0;
+  while (cursor < items.length) {
+    const spec = GRID_PATTERN[patternIndex % GRID_PATTERN.length];
+    const take = spec.kind === 'row' ? spec.cols : 1;
+    const slice = items.slice(cursor, cursor + take);
+    if (slice.length === 0) break;
 
-function HeartIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M12 20.5l-1.1-1C5.4 14.8 2 11.9 2 8.5 2 6 4 4 6.5 4c1.5 0 3 .8 3.8 2.1C11.1 4.8 12.6 4 14.1 4 16.6 4 18.6 6 18.6 8.5c0 3.4-3.4 6.3-8.9 10.9L12 20.5z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
-    </svg>
-  );
-}
+    let effectiveSpec = spec;
+    if (spec.kind === 'row' && slice.length < spec.cols) {
+      effectiveSpec =
+        slice.length === 1
+          ? { kind: 'full', height: 314 }
+          : { kind: 'row', cols: slice.length, height: spec.height };
+    }
 
-function VideoIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.8" />
-      <path d="M10.2 9.2v5.6l5.2-2.8-5.2-2.8z" fill="currentColor" />
-    </svg>
-  );
-}
-
-function WalkIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M12 5l6.5 3.75v7.5L12 20l-6.5-3.75v-7.5L12 5z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinejoin="round"
-      />
-      <path d="M12 5v15M5.5 8.75L12 12.5l6.5-3.75" stroke="currentColor" strokeWidth="1.8" />
-    </svg>
-  );
-}
-
-function SparkleIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-      <path
-        d="M12.1167 7.88345L10.45 3.36678H9.55833L7.89167 7.88345L3.375 9.55011V10.4418L7.89167 12.1084L9.55833 16.6251H10.45L12.1167 12.1084L16.6333 10.4418V9.55011L12.1167 7.88345Z"
-        fill="currentColor"
-      />
-      <path
-        d="M16.2083 3.80008L15.4167 1.66675L14.625 3.80008L12.5 4.58341L14.625 5.37508L15.4167 7.50008L16.2083 5.37508L18.3333 4.58341L16.2083 3.80008Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-function PhoneIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M6.6 10.8a13.4 13.4 0 006.6 6.6l2.2-2.2a1 1 0 011-.24 11 11 0 003.5.56 1 1 0 011 1V20a1 1 0 01-1 1A16 16 0 013 5a1 1 0 011-1h3.5a1 1 0 011 1 11 11 0 00.56 3.5 1 1 0 01-.25 1L6.6 10.8z"
-        stroke="currentColor"
-        strokeWidth="1.8"
-      />
-    </svg>
-  );
-}
-
-function buildDefaultMessage(listing) {
-  return buildContactMessage(listing);
+    sections.push({ spec: effectiveSpec, items: slice });
+    cursor += slice.length;
+    patternIndex += 1;
+  }
+  return sections;
 }
 
 export function PhotoGalleryModal({
   media,
   listing,
   isOpen,
+  scrollToMediaId = null,
   onClose,
-  onContactAdvertiser,
   widget,
 }) {
   const [lightboxIndex, setLightboxIndex] = useState(null);
-  const { openAll, openSingle, hasImages } = widget;
-
-  const handleOpenAll = () => {
-    setLightboxIndex(null);
-    openAll();
-  };
-
-  const handleOpenSingle = (item) => {
-    setLightboxIndex(null);
-    openSingle(item);
-  };
+  const scrollContainerRef = useRef(null);
+  const tileRefs = useRef({});
+  const { openAll, hasImages } = widget;
 
   useEffect(() => {
     if (!isOpen) {
@@ -167,227 +93,261 @@ export function PhotoGalleryModal({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, lightboxIndex, onClose]);
 
+  useEffect(() => {
+    if (!isOpen) return undefined;
+
+    const attempt = () => {
+      const container = scrollContainerRef.current;
+      if (!container) return;
+
+      if (!scrollToMediaId) {
+        container.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        return;
+      }
+
+      const target = tileRefs.current[scrollToMediaId];
+      if (!target) return;
+      const targetTop = target.getBoundingClientRect().top;
+      const containerTop = container.getBoundingClientRect().top;
+      container.scrollTo({
+        top: container.scrollTop + targetTop - containerTop - 16,
+        behavior: 'auto',
+      });
+    };
+    const raf = requestAnimationFrame(attempt);
+    return () => cancelAnimationFrame(raf);
+  }, [isOpen, scrollToMediaId, media]);
+
   if (!isOpen || media.length === 0) {
     return null;
   }
 
   const active = lightboxIndex !== null ? media[lightboxIndex] : null;
-
   const hero = media[0];
   const rest = media.slice(1);
-  const agent = listing?.agent ?? {};
-  const agency = listing?.agency ?? {};
+  const gridSections = buildGridSections(rest);
+
+  const registerTile = (id) => (el) => {
+    if (el) tileRefs.current[id] = el;
+  };
+
+  let indexCursor = 1;
 
   return createPortal(
     <div className="pgm" role="presentation">
-      <header className="pgm__toolbar">
-        <button type="button" className="pgm__back" aria-label="Back" onClick={onClose}>
-          <BackIcon />
-          Back
-        </button>
+      <div className="pgm__scroll" ref={scrollContainerRef}>
+        <header className="pgm__toolbar">
+          <button
+            type="button"
+            className="pgm__icon-btn pgm__icon-btn--back"
+            aria-label="Wstecz"
+            onClick={onClose}
+          >
+            <img src="/icons/pgm-back.svg" alt="" width="24" height="24" aria-hidden />
+          </button>
+          <div className="pgm__toolbar-spacer" aria-hidden />
+          <button type="button" className="pgm__icon-btn ad-static-cta" aria-label="Udostępnij">
+            <img src="/icons/pgm-share.svg" alt="" width="24" height="24" aria-hidden />
+          </button>
+          <button type="button" className="pgm__icon-btn ad-static-cta" aria-label="Zapisz">
+            <img src="/icons/pgm-heart.svg" alt="" width="24" height="24" aria-hidden />
+          </button>
+        </header>
 
-        <div className="pgm__actions">
-          <button type="button" className="pgm__icon-btn" aria-label="Share">
-            <ShareIcon />
-          </button>
-          <button type="button" className="pgm__icon-btn" aria-label="Add to favorites">
-            <HeartIcon />
-          </button>
+        <div className="pgm__chip-bar">
+          {CHIP_TABS.map((tab) => (
+            <span
+              key={tab.id}
+              role="button"
+              tabIndex={0}
+              className={
+                tab.active
+                  ? 'pgm__chip pgm__chip--active ad-static-cta'
+                  : 'pgm__chip ad-static-cta'
+              }
+            >
+              <img src={tab.icon} alt="" width="16" height="16" aria-hidden />
+              <span>
+                {tab.label}
+                {tab.active ? ` (${media.length})` : ''}
+              </span>
+            </span>
+          ))}
         </div>
-      </header>
 
-      <div className="pgm__scroll">
         <div className="pgm__container">
-          <div className="pgm__tabs">
-            <button type="button" className="pgm__tab pgm__tab--active">
-              <CameraIcon />
-              Photos ({media.length})
-            </button>
-            <button type="button" className="pgm__tab" disabled>
-              <FloorPlanIcon />
-              Floor plan
-            </button>
-            <button type="button" className="pgm__tab" disabled>
-              <VideoIcon />
-              Video
-            </button>
-            <button type="button" className="pgm__tab" disabled>
-              <WalkIcon />
-              3d walk
-            </button>
-          </div>
-
-          <h2 className="pgm__heading">Photos</h2>
-
           <div className="pgm__layout">
             <div className="pgm__main">
-              {hero ? (
-                <div className="pgm__hero">
-                  <button
-                    type="button"
-                    className="pgm__tile-btn"
-                    onClick={() => setLightboxIndex(0)}
-                    aria-label="Open photo 1"
-                  >
-                    <img src={hero.image_url} alt={hero.label} />
-                  </button>
-                </div>
-              ) : null}
+              <h2 className="pgm__heading">Zdjęcia</h2>
 
-              {hasImages ? (
-                <div className="pgm__promo">
-                  <span className="pgm__promo-icon" aria-hidden>
-                    <SparkleIcon />
-                  </span>
-                  <div className="pgm__promo-text">
-                    <p className="pgm__promo-title">
-                      Want to see how this home can reflect your style?
-                    </p>
-                    <p className="pgm__promo-sub">
-                      Try our virtual interior designer to discover different styles for
-                      this space in seconds.
-                    </p>
+              <div className="pgm__photos">
+                {hero ? (
+                  <div className="pgm__hero" ref={registerTile(hero.id)}>
+                    <button
+                      type="button"
+                      className="pgm__tile-btn"
+                      onClick={() => setLightboxIndex(0)}
+                      aria-label="Otwórz zdjęcie 1"
+                    >
+                      <img src={hero.image_url} alt={hero.label} />
+                    </button>
                   </div>
-                  <button type="button" className="pgm__promo-btn" onClick={handleOpenAll}>
-                    Arrange interior
-                  </button>
-                </div>
-              ) : null}
+                ) : null}
 
-              <div className="pgm__grid">
-                {rest.map((item, index) => {
-                  const realIndex = index + 1;
+                {hasImages ? (
+                  <div className="pgm__promo">
+                    <div className="pgm__promo-content">
+                      <span className="pgm__promo-icon" aria-hidden>
+                        <img src="/icons/promo-sparkle.svg" alt="" width="24" height="24" />
+                      </span>
+                      <div className="pgm__promo-text">
+                        <p className="pgm__promo-title">{PROMO_COPY.title}</p>
+                        <p className="pgm__promo-sub">{PROMO_COPY.sub}</p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      className="pgm__promo-btn"
+                      onClick={() => openAll()}
+                    >
+                      {PROMO_COPY.cta}
+                    </button>
+                  </div>
+                ) : null}
+
+                {gridSections.map((section, sectionIdx) => {
+                  const rowKey = `row-${sectionIdx}`;
+                  const rowClass =
+                    section.spec.kind === 'row'
+                      ? `pgm__row pgm__row--cols-${section.spec.cols}`
+                      : 'pgm__row pgm__row--full';
                   return (
-                    <div key={item.id} className="pgm__tile">
-                      <button
-                        type="button"
-                        className="pgm__tile-btn"
-                        onClick={() => setLightboxIndex(realIndex)}
-                        aria-label={`Open photo ${realIndex + 1}`}
-                      >
-                        <img src={item.image_url} alt={item.label} loading="lazy" />
-                      </button>
+                    <div
+                      key={rowKey}
+                      className={rowClass}
+                      style={{ '--pgm-row-h': `${section.spec.height}px` }}
+                    >
+                      {section.items.map((item) => {
+                        const localIndex = indexCursor;
+                        indexCursor += 1;
+                        return (
+                          <div
+                            key={item.id}
+                            className="pgm__tile"
+                            ref={registerTile(item.id)}
+                          >
+                            <button
+                              type="button"
+                              className="pgm__tile-btn"
+                              onClick={() => setLightboxIndex(localIndex)}
+                              aria-label={`Otwórz zdjęcie ${localIndex + 1}`}
+                            >
+                              <img src={item.image_url} alt={item.label} loading="lazy" />
+                            </button>
+                          </div>
+                        );
+                      })}
                     </div>
                   );
                 })}
               </div>
             </div>
 
-            <aside className="pgm__sidebar">
-              <div className="pgm__card">
-                <div className="pgm__agent">
-                  {agent.photo ? (
-                    <img className="pgm__avatar" src={agent.photo} alt={agent.name} />
-                  ) : (
-                    <div className="pgm__avatar pgm__avatar--fallback" aria-hidden>
-                      {agent.initials}
-                    </div>
-                  )}
-                  <div className="pgm__agent-info">
-                    <p className="pgm__agent-name">{agent.name}</p>
-                    <p className="pgm__agent-company">{agent.company ?? agency.name}</p>
-                    <button type="button" className="pgm__phone-btn">
-                      <PhoneIcon />
-                      Show phone
-                    </button>
-                  </div>
-                </div>
-
-                <form className="pgm__form" onSubmit={(e) => e.preventDefault()}>
-                  <label className="pgm__field">
-                    <span className="pgm__label">Name*</span>
-                    <input type="text" placeholder="Type your name" />
-                  </label>
-
-                  <label className="pgm__field">
-                    <span className="pgm__label">E-mail*</span>
-                    <input type="email" placeholder="Type your e-mail" />
-                  </label>
-
-                  <label className="pgm__field">
-                    <span className="pgm__label">Phone number*</span>
-                    <div className="pgm__phone">
-                      <select defaultValue="+48" aria-label="Country code">
-                        <option value="+48">+48</option>
-                      </select>
-                      <input type="tel" placeholder="Type your phone number" />
-                    </div>
-                  </label>
-
-                  <label className="pgm__field">
-                    <span className="pgm__label">Your message</span>
-                    <textarea rows={4} defaultValue={buildDefaultMessage(listing)} />
-                  </label>
-
-                  <p className="pgm__legal">
-                    The controller of your personal data is Grupa OLX Sp. z o.o. You can
-                    find more information in our Privacy Policy.
-                  </p>
-
-                  <button type="submit" className="pgm__submit" onClick={onContactAdvertiser}>
-                    Send message
-                  </button>
-                </form>
-              </div>
-            </aside>
+            <div className="pgm__sidebar">
+              <ListingContactSidebar listing={listing} />
+            </div>
           </div>
         </div>
       </div>
 
       {active ? (
-        <div className="photo-lightbox" role="dialog" aria-modal="true" aria-label="Photo preview">
-          <button
-            type="button"
-            className="photo-lightbox__backdrop"
-            aria-label="Back to gallery"
-            onClick={() => setLightboxIndex(null)}
-          />
-
-          <div className="photo-lightbox__content">
+        <div className="photo-lightbox" role="dialog" aria-modal="true" aria-label="Podgląd zdjęcia">
+          <header className="photo-lightbox__toolbar">
             <button
               type="button"
-              className="photo-lightbox__close"
-              aria-label="Back to gallery"
+              className="photo-lightbox__icon-btn photo-lightbox__toolbar-close"
+              aria-label="Wróć do galerii"
               onClick={() => setLightboxIndex(null)}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path
                   d="M6 6l12 12M18 6L6 18"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth="1.25"
                   strokeLinecap="round"
                 />
               </svg>
             </button>
+            <div className="photo-lightbox__count">
+              {lightboxIndex + 1}/{media.length}
+            </div>
+            <div className="photo-lightbox__toolbar-actions">
+              <button
+                type="button"
+                className="photo-lightbox__icon-btn ad-static-cta"
+                aria-label="Udostępnij"
+              >
+                <img src="/icons/pgm-share.svg" alt="" width="24" height="24" aria-hidden />
+              </button>
+              <button
+                type="button"
+                className="photo-lightbox__icon-btn ad-static-cta"
+                aria-label="Zapisz"
+              >
+                <img src="/icons/pgm-heart.svg" alt="" width="24" height="24" aria-hidden />
+              </button>
+            </div>
+          </header>
 
+          <div className="photo-lightbox__body">
             <button
               type="button"
               className="photo-lightbox__nav photo-lightbox__nav--prev"
-              aria-label="Previous photo"
+              aria-label="Poprzednie zdjęcie"
               onClick={() =>
                 setLightboxIndex((index) => (index - 1 + media.length) % media.length)
               }
             >
-              ‹
+              <img src="/icons/chevron-left.svg" alt="" width="24" height="24" aria-hidden />
             </button>
 
-            <figure className="photo-lightbox__figure">
-              <img src={active.image_url} alt={active.label} />
-              <figcaption>
-                {lightboxIndex + 1} / {media.length}
-              </figcaption>
-            </figure>
+            <div className="photo-lightbox__stage">
+              <img
+                className="photo-lightbox__image"
+                src={active.image_url}
+                alt={active.label}
+              />
+            </div>
 
             <button
               type="button"
               className="photo-lightbox__nav photo-lightbox__nav--next"
-              aria-label="Next photo"
+              aria-label="Następne zdjęcie"
               onClick={() =>
                 setLightboxIndex((index) => (index + 1) % media.length)
               }
             >
-              ›
+              <img src="/icons/chevron-right.svg" alt="" width="24" height="24" aria-hidden />
             </button>
+          </div>
+
+          <div className="photo-lightbox__thumbs">
+            {media.map((item, idx) => (
+              <button
+                key={item.id}
+                type="button"
+                className={
+                  idx === lightboxIndex
+                    ? 'photo-lightbox__thumb photo-lightbox__thumb--active'
+                    : 'photo-lightbox__thumb'
+                }
+                aria-label={`Pokaż zdjęcie ${idx + 1}`}
+                aria-current={idx === lightboxIndex ? 'true' : undefined}
+                onClick={() => setLightboxIndex(idx)}
+              >
+                <img src={item.image_url} alt="" loading="lazy" />
+              </button>
+            ))}
           </div>
         </div>
       ) : null}
