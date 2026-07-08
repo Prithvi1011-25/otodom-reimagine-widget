@@ -119,7 +119,6 @@
 
 .ad-agency-bar {
   background: var(--ad-page-bg);
-  border-top: 1px solid var(--ad-border);
   border-bottom: 1px solid var(--ad-border);
 }
 
@@ -391,7 +390,6 @@
   letter-spacing: -0.5px;
   cursor: pointer;
   white-space: nowrap;
-  backdrop-filter: blur(4px);
   transition: background-color 150ms ease;
 }
 
@@ -415,7 +413,6 @@
   background: #d4caf6;
   color: #071121;
   font-weight: 600;
-  backdrop-filter: none;
   transition: background-color 150ms ease;
 }
 
@@ -695,6 +692,10 @@
   border: none;
   background: #d4caf6;
   font-weight: 600;
+}
+
+.ad-gallery__action--bold {
+  font-weight: 700;
 }
 
 .ad-gallery__action--chip img {

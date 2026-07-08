@@ -87,6 +87,155 @@ function SearchIcon() {
   );
 }
 
+function ChevronRight() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M9 6l6 6-6 6"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function MapSearchIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M9 4L3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path d="M9 4v14M15 6v14" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
+function SmallSearchIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="11" cy="11" r="6" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M15.5 15.5L20 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function ListIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M4 6h.01M4 12h.01M4 18h.01M8 6h12M8 12h12M8 18h12"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+const RECENT_LOCATIONS = [{ name: 'Prusewo', detail: 'wieś, Krokowa, pucki, pomorskie' }];
+
+const LOCATION_ACTIONS = [
+  { icon: <MapSearchIcon />, label: 'Szukaj na mapie' },
+  { icon: <SmallSearchIcon />, label: 'Szukaj w pobliżu adresu' },
+  { icon: <ListIcon />, label: 'Wybierz lokalizację z listy' },
+];
+
+function LocationField() {
+  const [value, setValue] = useState('');
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const handlePointer = (event) => {
+      if (rootRef.current && !rootRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    const handleKey = (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+
+    document.addEventListener('mousedown', handlePointer);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('mousedown', handlePointer);
+      document.removeEventListener('keydown', handleKey);
+    };
+  }, [open]);
+
+  return (
+    <div
+      ref={rootRef}
+      className={`home-search__field home-search__field--location home-location${
+        open ? ' home-location--open' : ''
+      }`}
+    >
+      <label>
+        <span className="visually-hidden">Lokalizacja</span>
+        <input
+          type="search"
+          placeholder="Wpisz lokalizację"
+          name="location-query-nofill"
+          autoComplete="off"
+          autoCorrect="off"
+          spellCheck="false"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded={open}
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          onClick={() => setOpen(true)}
+          onFocus={() => setOpen(true)}
+        />
+      </label>
+
+      {open && (
+        <div className="home-location__panel">
+          <div className="home-location__section">
+            <p className="home-location__section-title">Ostatnio wybrane</p>
+            {RECENT_LOCATIONS.map((item) => (
+              <button
+                key={item.name}
+                type="button"
+                className="home-location__recent"
+                onClick={() => {
+                  setValue(item.name);
+                  setOpen(false);
+                }}
+              >
+                <span className="home-location__recent-name">{item.name}</span>
+                <span className="home-location__recent-detail">{item.detail}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="home-location__actions">
+            {LOCATION_ACTIONS.map((action) => (
+              <button
+                key={action.label}
+                type="button"
+                className="home-location__action"
+                onClick={() => setOpen(false)}
+              >
+                {action.icon}
+                <span className="home-location__action-label">{action.label}</span>
+                <ChevronRight />
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function RangeInput({ placeholder, unit, label }) {
   return (
     <label className="home-search__range-field">
@@ -149,10 +298,7 @@ export function HomeSearchWidget() {
             ]}
           />
 
-          <label className="home-search__field home-search__field--location">
-            <span className="visually-hidden">Lokalizacja</span>
-            <input type="text" placeholder="Wpisz lokalizację" />
-          </label>
+          <LocationField />
 
           <SelectField
             className="home-search__field--radius"
