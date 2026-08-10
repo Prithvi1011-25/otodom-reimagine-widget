@@ -9,11 +9,11 @@ export {
   WIDGET_LOCAL_API_BASE_URL,
 } from './widgetEnv.js';
 
-export const WIDGET_SCRIPT_URL = 'https://widget.styldod.com/widget.js';
+export const WIDGET_SCRIPT_URL = 'https://stage-widget.styldod.com/widget.js';
 
 export const WIDGET_SCRIPT_ID = 'reih-widget-script';
 
-export const WIDGET_PUBLIC_KEY = 'ppk_qAQ-KAMzvXpbKvhkRMyWTsv1';
+export const WIDGET_PUBLIC_KEY = 'ppk_SQl4LpRx106qAzdVoRSPgmh-';
 
 export const REIH_LOADER_ID = 'reih-host-loader';
 
